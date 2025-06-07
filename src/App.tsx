@@ -14,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <main className="px-4 py-6">
+      <main className="">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/gallery" element={<Gallery />} />
