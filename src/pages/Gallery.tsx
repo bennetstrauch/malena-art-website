@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { parseImageFilename } from "../utility/ParserImageFilename";
+import TabSelector from "../components/TabSelector";
 
 const years = ["2025", "2024", "2023"];
 
@@ -13,7 +14,9 @@ type ImageEntry = {
   url: string;
 };
 
-const allImages = import.meta.glob('/public/images/*/*.jpg', { as: 'url' });
+const allImages = import.meta.glob("/public/images/gallery/*/*.jpg", {
+  as: "url",
+});
 
 export default function Gallery() {
   const [selectedYear, setSelectedYear] = useState("2025");
@@ -33,7 +36,6 @@ export default function Gallery() {
             };
           })
       );
-
       setImageEntries(filtered);
     };
 
@@ -41,20 +43,12 @@ export default function Gallery() {
   }, [selectedYear]);
 
   return (
-    <div className="px-6 py-12">
-      <div className="flex justify-center gap-4 mb-8 text-lg">
-        {years.map((year) => (
-          <button
-            key={year}
-            className={`px-3 py-1 ${
-              selectedYear === year ? "font-bold underline" : ""
-            }`}
-            onClick={() => setSelectedYear(year)}
-          >
-            {year}
-          </button>
-        ))}
-      </div>
+    <div className="px-6 py-0">
+      <TabSelector
+        tabs={years}
+        selectedTab={selectedYear}
+        onSelect={setSelectedYear}
+      />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {imageEntries.map((img) => (
