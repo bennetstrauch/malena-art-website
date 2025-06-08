@@ -2,19 +2,6 @@ import LandingPainting from "../components/LandingPainting";
 
 function Home() {
   return (
-    // <div
-    //   className="relative w-full h-screen bg-cover bg-center"
-    //   style={{
-    //     backgroundImage: "url('/images/artist-wall-bg.jpeg')",
-    //     // backgroundSize: "cover",
-    //   }}
-    // >
-    // <div className="relative w-full h-screen bg-[url('/images/artist-wall-bg.jpeg')] bg-no-repeat bg-center bg-contain">
-
-    //    <div
-    //   className="w-screen h-screen bg-no-repeat bg-contain bg-left overflow-x-hidden overflow-y-auto"
-    //   style={{ backgroundImage: "url('/images/artist-wall-bg.jpeg')" }}
-    // >
 
 <div className="fixed top-0 left-0 w-screen h-screen overflow-hidden bg-white z-0">
   <div className="relative w-full h-full flex justify-start items-start">
