@@ -9,14 +9,14 @@ interface LandingPaintingProps {
 
 const LandingPainting = ({ image, title, to, style }: LandingPaintingProps) => (
    <Link to={to} className="absolute" style={style}>
-    <div className="flex flex-col items-center group cursor-pointer"
+    <div className="flex flex-col items-end group cursor-pointer"
          style={{ width: '20vw', fontSize: '2.4vw' }}>
       <img
         src={image}
         alt={title}
         className="w-full h-auto aspect-[2/3] object-cover shadow-md group-hover:scale-105 transition-transform"
       />
-      <span className="mt-1 text-gray-800 group-hover:text-blue-600 text-center">
+      <span className="mt-1 text-gray-700 group-hover:text-blue-600 text-right mr-2">
         {title}
       </span>
     </div>

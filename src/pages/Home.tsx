@@ -2,14 +2,15 @@ import LandingPainting from "../components/LandingPainting";
 
 function Home() {
   return (
+// #changed 
 
-<div className="fixed top-0 left-0 w-screen h-screen overflow-hidden bg-white z-0">
-  <div className="relative w-full h-full flex justify-start items-start">
+<div className="relative w-screen min-h-screen overflow-auto bg-white z-0">
+<div className="relative w-full flex flex-wrap justify-center items-start gap-8 p-4">
     <img
       src="/images/artist-wall-bg.jpeg"
       alt="Artist painting wall"
       className="block object-left-top object-cover w-auto h-full max-w-none"
-      style={{ maxWidth: "none", minWidth: "100vw" }}
+style={{ width: "100%", height: "100%" }}
     />
 
        
