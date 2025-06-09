@@ -1,14 +1,13 @@
-
-import './App.css'
-import { Route, Routes, BrowserRouter } from 'react-router-dom'
-import Navbar from './components/Navbar'
+import "./App.css";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import Gallery from './pages/Gallery';
-import Contact from './pages/Contact';
-import About from './pages/About';
+import Gallery from "./pages/Gallery";
+import Contact from "./pages/Contact";
+import About from "./pages/About";
+import GalleryImageView from "./pages/GalleryImageView";
 
 function App() {
-
   return (
     <BrowserRouter>
       <Navbar />
@@ -19,10 +18,15 @@ function App() {
           {/* <Route path="/sale" element={<Sale />} /> */}
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
+
+          <Route
+            path="/gallery/:year/:filename"
+            element={<GalleryImageView />}
+          />
         </Routes>
       </main>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

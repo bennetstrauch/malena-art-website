@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { parseImageFilename } from "../utility/ParserImageFilename";
 import TabSelector from "../components/TabSelector";
+import { Link } from "react-router-dom";
 
 const years = ["2025", "2024", "2023"];
 
@@ -42,6 +43,19 @@ export default function Gallery() {
     loadImages();
   }, [selectedYear]);
 
+  // # to restore scroll position after navigating back (extra effect needed?)
+  useEffect(() => {
+    const y = sessionStorage.getItem("scrollY");
+    if (y) {
+      window.scrollTo(0, parseInt(y));
+      sessionStorage.removeItem("scrollY");
+    }
+  }, []);
+
+  const handleImageClick = () => {
+    sessionStorage.setItem("scrollY", window.scrollY.toString());
+  };
+
   return (
     <div className="px-6 py-0">
       <TabSelector
@@ -56,12 +70,17 @@ export default function Gallery() {
             key={img.filename}
             className="cursor-pointer text-center group transition-all"
           >
-            <img
-              src={img.url}
-              alt={img.title}
-              className="w-full h-auto object-cover group-hover:opacity-80"
-            />
-            <p className="mt-2 text-sm">{img.title}</p>
+            <Link
+              to={`/gallery/${img.year}/${img.filename}`}
+              onClick={handleImageClick}
+            >
+              <img
+                src={img.url}
+                alt={img.title}
+                className="w-full h-auto object-cover group-hover:opacity-80"
+              />
+              <p className="mt-2 text-sm">{img.title}</p>
+            </Link>
           </div>
         ))}
       </div>
