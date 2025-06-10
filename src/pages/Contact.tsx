@@ -13,7 +13,7 @@ export default function Contact() {
     email: "",
     subject,
     message,
-    image, // 👈 include image in form
+    image,
   });
 
   const [loading, setLoading] = useState(false);

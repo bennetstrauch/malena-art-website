@@ -1,6 +1,5 @@
 //pages/gallery component
 import { useEffect, useState } from "react";
-import { parseImageFilename } from "../utility/ParserImageFilename";
 import TabSelector from "../components/TabSelector";
 import { Link } from "react-router-dom";
 import { useGalleryImages } from "../hooks/useGalleryImages";
