@@ -6,6 +6,7 @@ import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import GalleryImageView from "./pages/GalleryImageView";
+import Sales from "./pages/Sales";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/gallery" element={<Gallery />} />
-          {/* <Route path="/sale" element={<Sale />} /> */}
+          <Route path="/sales" element={<Sales />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
 

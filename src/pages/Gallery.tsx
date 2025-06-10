@@ -1,47 +1,18 @@
+//pages/gallery component
 import { useEffect, useState } from "react";
 import { parseImageFilename } from "../utility/ParserImageFilename";
 import TabSelector from "../components/TabSelector";
 import { Link } from "react-router-dom";
+import { useGalleryImages } from "../hooks/useGalleryImages";
 
 const years = ["2025", "2024", "2023"];
 
-type ImageEntry = {
-  title: string;
-  year: string;
-  material: string;
-  size: string;
-  price: string;
-  filename: string;
-  url: string;
-};
-
-const allImages = import.meta.glob("/public/images/gallery/*/*.jpg", {
-  as: "url",
-});
 
 export default function Gallery() {
-  const [selectedYear, setSelectedYear] = useState("2025");
-  const [imageEntries, setImageEntries] = useState<ImageEntry[]>([]);
+  const [selectedYear, setSelectedYear] = useState("2025")
+  const imageEntries = useGalleryImages(selectedYear);
 
-  useEffect(() => {
-    const loadImages = async () => {
-      const filtered = await Promise.all(
-        Object.entries(allImages)
-          .filter(([path]) => path.includes(`/${selectedYear}/`))
-          .map(async ([path, importer]) => {
-            const url = await importer();
-            const filename = path.split("/").pop()!;
-            return {
-              ...parseImageFilename(filename),
-              url,
-            };
-          })
-      );
-      setImageEntries(filtered);
-    };
-
-    loadImages();
-  }, [selectedYear]);
+ 
 
   // # to restore scroll position after navigating back (extra effect needed?)
   useEffect(() => {

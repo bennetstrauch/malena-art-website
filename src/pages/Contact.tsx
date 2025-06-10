@@ -1,14 +1,19 @@
+import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import InputField from "../components/form/InputField";
 import TextAreaField from "../components/form/TextAreaField";
 
 export default function Contact() {
+  const location = useLocation();
+  const { subject = "", message = "", image = null } = location.state || {};
+
   const [form, setForm] = useState({
     name: "",
     email: "",
-    subject: "",
-    message: "",
+    subject,
+    message,
+    image, // 👈 include image in form
   });
 
   const [loading, setLoading] = useState(false);
@@ -26,13 +31,13 @@ export default function Contact() {
       const result = await emailjs.send(
         "gmail_service_malena",
         "template_contact_malena",
-        form,
+        form, // includes image field now
         "YtA5lxqH9IEUE4zt5"
       );
 
       console.log("Email successfully sent:", result.text);
       alert("Message sent successfully!");
-      setForm({ name: "", email: "", subject: "", message: "" });
+      setForm({ name: "", email: "", subject: "", message: "", image: null });
     } catch (error) {
       console.error("Email send failed:", error);
       alert("Something went wrong. Please try again later.");
@@ -79,7 +84,7 @@ export default function Contact() {
           onChange={handleChange}
         />
 
-        <div className="pt-4">
+        <div className="">
           <button
             type="submit"
             disabled={loading}
@@ -92,6 +97,20 @@ export default function Contact() {
             {loading ? "Sending..." : "Send Message"}
           </button>
         </div>
+
+        {/* 👇 Show attached image if present */}
+        {form.image && (
+          <div className="pt-2">
+            <p className="text-sm font-medium text-gray-600 mb-1">Attached Artwork:</p>
+            <img
+              src={form.image}
+              alt="Attached artwork"
+              className="max-w-full rounded shadow"
+            />
+          </div>
+        )}
+
+        
       </form>
     </div>
   );

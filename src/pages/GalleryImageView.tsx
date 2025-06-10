@@ -9,6 +9,8 @@ const allImages = import.meta.glob("/public/images/gallery/*/*.jpg", {
   as: "url",
 });
 
+// ##instead of arrows use swipe at phone
+
 export default function GalleryImageView() {
   const { year, filename } = useParams();
   const navigate = useNavigate();
