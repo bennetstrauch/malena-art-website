@@ -2,50 +2,50 @@ import LandingPainting from "../components/LandingPainting";
 
 function Home() {
   return (
-// #changed 
+    <div className="relative w-full h-full overflow-hidden bg-white">
+      {/* Background Wall - Scales exactly to viewport height */}
+      <img
+        src="/images/extra-long-wall-short-floor.jpg"
+        alt="Gallery Wall"
+        className="absolute bottom-0 left-0 z-0 pointer-events-none"
+        style={{
+          height: "100%", // Always fill vertical space
+          width: "auto", // Let width scale naturally
+          objectFit: "cover", // ✅ Crop horizontally if needed
+          objectPosition: "left bottom", // ✅ Keep floor visible, cut from right
+        }}
+      />
 
-<div className="relative w-screen min-h-screen overflow-auto bg-white z-0">
-<div className="relative w-full flex flex-wrap justify-center items-start gap-8 p-4">
-    <img
-      src="/images/artist-wall-bg.jpeg"
-      alt="Artist painting wall"
-      className="block object-left-top object-cover w-auto h-full max-w-none"
-style={{ width: "100%", height: "100%" }}
-    />
-
-       
-            {/* Painting 1 */}
-          <LandingPainting
-            image="/images/painting1.jpg"
-            title="Gallery"
-            to="/gallery"
-            //   Position of Nav-Image:
-            style={{ top: "10%", left: "22.8%" }}
-          />
-
-          {/* Painting 2 */}
-          <LandingPainting
-            image="/images/painting2.jpg"
-            title="Contact"
-            to="/contact"
-            style={{ top: "40%", left: "49%" }}
-          />
-
-          {/* Painting 3 */}
-          <LandingPainting
-            image="/images/painting3.jpg"
-            title="About"
-            to="/about"
-            style={{ top: "6%", left: "76%" }}
-          />
-        </div>
+      {/* Paintings */}
+      <div className="absolute top-0 left-0 w-full h-full z-10 pointer-events-auto">
+        <LandingPainting
+          image="/images/painting1.jpg"
+          title="Gallery"
+          to="/gallery"
+          style={{ top: "5%", left: "15%" }}
+        />
+        <LandingPainting
+          image="/images/painting2.jpg"
+          title="Contact"
+          to="/contact"
+          style={{ top: "45%", left: "49%" }}
+        />
+        <LandingPainting
+          image="/images/painting3.jpg"
+          title="About"
+          to="/about"
+          style={{ top: "8%", left: "76%" }}
+        />
       </div>
- 
 
-    // <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-    //     <h1 className="text-4xl font-bold mb-4">Welcome to Malena Strauch's Website</h1>
-    //     <p className="text-lg text-gray-700">Explore the gallery, shop for art, or learn more about the artist.</p>
-    // </div>
+      {/* Foreground Artist (click-through) */}
+      <img
+        src="/images/artist_extracted.png"
+        alt="Malena painting"
+        className="absolute bottom-1 left-0 h-full z-20 pointer-events-none"
+        style={{ objectFit: "contain", maxHeight: "85vh" }}
+      />
+    </div>
   );
 }
 

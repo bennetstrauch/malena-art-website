@@ -10,7 +10,7 @@ interface LandingPaintingProps {
 const LandingPainting = ({ image, title, to, style }: LandingPaintingProps) => (
    <Link to={to} className="absolute" style={style}>
     <div className="flex flex-col items-end group cursor-pointer"
-         style={{ width: '20vw', fontSize: '2.4vw' }}>
+         style={{ width: '20vw', minWidth: '100px', fontSize: '2.4vw'}}>
       <img
         src={image}
         alt={title}
