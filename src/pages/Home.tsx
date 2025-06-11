@@ -22,19 +22,19 @@ function Home() {
           image="/images/painting1.jpg"
           title="Gallery"
           to="/gallery"
-          style={{ top: "5%", left: "15%" }}
+          style={{ top: "5%", left: "15%", }}
         />
         <LandingPainting
           image="/images/painting2.jpg"
           title="Contact"
           to="/contact"
-          style={{ top: "45%", left: "49%" }}
+          style={{ top: "45%", left: "40%" }}
         />
         <LandingPainting
           image="/images/painting3.jpg"
           title="About"
           to="/about"
-          style={{ top: "8%", left: "76%" }}
+          style={{ top: "8%", left: "70%" }}
         />
       </div>
 
