@@ -14,7 +14,7 @@ const LandingPainting = ({ image, title, to, style }: LandingPaintingProps) => (
       <img
         src={image}
         alt={title}
-        className="w-full h-auto aspect-[2/3] object-cover shadow-md group-hover:scale-105 transition-transform"
+        className="w-full h-auto  object-cover shadow-md group-hover:scale-105 transition-transform"
       />
       <span className="mt-1 text-gray-700 group-hover:text-blue-600 text-right mr-2">
         {title}

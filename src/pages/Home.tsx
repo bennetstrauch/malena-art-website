@@ -28,7 +28,7 @@ function Home() {
           image="/images/painting2.jpg"
           title="Contact"
           to="/contact"
-          style={{ top: "40%", right: "38%" }}
+          style={{ top: "40%", right: "38%"}}
         />
         <LandingPainting
           image="/images/painting3.jpg"
