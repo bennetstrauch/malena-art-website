@@ -6,12 +6,9 @@ import { useGalleryImages } from "../hooks/useGalleryImages";
 
 const years = ["2025", "2024", "2023"];
 
-
 export default function Gallery() {
-  const [selectedYear, setSelectedYear] = useState("2025")
+  const [selectedYear, setSelectedYear] = useState("2025");
   const imageEntries = useGalleryImages(selectedYear);
-
- 
 
   // # to restore scroll position after navigating back (extra effect needed?)
   useEffect(() => {

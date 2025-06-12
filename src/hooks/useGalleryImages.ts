@@ -1,4 +1,3 @@
-// src/hooks/useGalleryImages.ts
 import { useEffect, useState } from "react";
 import { parseImageFilename } from "../utility/ParserImageFilename";
 
@@ -16,24 +15,32 @@ export type ImageEntry = {
   url: string;
 };
 
-export function useGalleryImages(year: string, filter?: (img: ImageEntry) => boolean) {
+export function useGalleryImages(
+  year: string,
+  filter?: (img: ImageEntry) => boolean
+) {
   const [imageEntries, setImageEntries] = useState<ImageEntry[]>([]);
 
   useEffect(() => {
     const loadImages = async () => {
-      const images = await Promise.all(
-        Object.entries(allImages)
-          .filter(([path]) => path.includes(`/${year}/`))
-          .map(async ([path, importer]) => {
-            const url = await importer();
-            const filename = path.split("/").pop()!;
-            const parsed = { ...parseImageFilename(filename), url };
-            return parsed;
-          })
+      const matchingFiles = Object.entries(allImages).filter(([path]) =>
+        path.includes(`/${year}/`)
       );
 
-      const filtered = filter ? images.filter(filter) : images;
-      setImageEntries(filtered);
+      const entries: ImageEntry[] = [];
+
+      for (const [path, importer] of matchingFiles) {
+        try {
+          const url = await importer();
+          const filename = path.split("/").pop()!;
+          const metadata = parseImageFilename(filename);
+          entries.push({ ...metadata, filename, url });
+        } catch (error) {
+          console.error(`Error parsing image "${path}":`, error);
+        }
+      }
+
+      setImageEntries(filter ? entries.filter(filter) : entries);
     };
 
     loadImages();

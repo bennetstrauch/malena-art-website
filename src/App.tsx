@@ -13,7 +13,7 @@ function App() {
     <BrowserRouter>
       <div className="flex flex-col h-screen overflow-hidden">
         <Navbar />
-        <main className="flex-grow overflow-hidden">
+        <main className="flex-grow overflow-auto">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/gallery" element={<Gallery />} />
