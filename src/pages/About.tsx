@@ -20,10 +20,9 @@ export default function About() {
 
   return (
     <div className="px-6 py-12 max-w-3xl mx-auto">
-      <div className="sticky top-16 z-10 bg-white">
+    
         <TabSelector tabs={tabs} selectedTab={selectedTab} onSelect={setSelectedTab} />
-      </div>
-
+     
       <div className="mt-8 text-lg leading-relaxed whitespace-pre-line">
         {content[selectedTab as keyof typeof content]}
       </div>

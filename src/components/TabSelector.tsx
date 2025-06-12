@@ -15,7 +15,7 @@ export default function TabSelector({
 }: TabSelectorProps) {
   return (
     // for fixity - conditional param passing if needed w/o somewhere else
-    <div className="sticky top-12 z-10 bg-white" style={{ paddingTop: "10px" }}>
+    <div className="sticky top-0 z-10 bg-white" style={{ paddingTop: "10px" }}>
       <div
         className={`flex justify-center flex-wrap gap-4 mb-8 text-lg ${className}`}
       >
