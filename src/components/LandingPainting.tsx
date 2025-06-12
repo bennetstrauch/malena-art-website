@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { isMobile } from "../pages/Home";
 
 interface LandingPaintingProps {
   image: string;
@@ -16,7 +17,8 @@ const LandingPainting = ({ image, title, to, style }: LandingPaintingProps) => (
         alt={title}
         className="w-full h-auto  object-cover shadow-md group-hover:scale-105 transition-transform"
       />
-      <span className="mt-1 text-gray-700 group-hover:text-blue-600 text-right mr-2">
+      <span className="mt-1 text-gray-700 group-hover:text-blue-600 text-right mr-2"
+        style={ isMobile ? { fontSize: '3vh'} : {}}>
         {title}
       </span>
     </div>

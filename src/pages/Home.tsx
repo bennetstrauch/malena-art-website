@@ -1,6 +1,9 @@
 import LandingPainting from "../components/LandingPainting";
+export const isMobile = window.innerWidth <= 420;
 
 function Home() {
+
+
   return (
     <div className="relative w-full h-full overflow-hidden bg-white">
       {/* Background Wall - Scales exactly to viewport height */}
@@ -22,19 +25,23 @@ function Home() {
           image="/images/painting1.jpg"
           title="Gallery"
           to="/gallery"
-          style={{ top: "5%", left: "155px", }}
+          style={{ top: isMobile ? "1%" : "5%", left: "155px", }}
         />
         <LandingPainting
           image="/images/painting2.jpg"
           title="Contact"
           to="/contact"
-          style={{ top: "40%", right: "38%"}}
+          style={ isMobile
+            ? { top: "34%", left: "155px" }
+            : { top: "40%", right: "38%"}}
         />
         <LandingPainting
           image="/images/painting3.jpg"
           title="About"
           to="/about"
-          style={{ top: "12%", right: "10%" }}
+          style={ isMobile
+            ? { bottom: "8%", left: "155px" }
+            : { top: "12%", right: "10%" }}
         />
       </div>
 
