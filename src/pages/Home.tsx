@@ -1,4 +1,5 @@
 import LandingPainting from "../components/LandingPainting";
+// not dynamic # what are hooks?
 export const isMobile = window.innerWidth <= 420;
 
 function Home() {
