@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { parseImageFilename } from "../utility/ParserImageFilename";
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
-import HamburgerMenu from "../components/HamburgerMenu";
+import HamburgerMenu from "../components/HamburgerMenuImageView";
 
 const allImages = import.meta.glob("/public/images/gallery/*/*.jpg", {
   as: "url",
@@ -14,9 +14,9 @@ const allImages = import.meta.glob("/public/images/gallery/*/*.jpg", {
 export default function GalleryImageView() {
   const { year, filename } = useParams();
   const navigate = useNavigate();
-  const [entries, setEntries] = useState<
-    { filename: string; url: string }[]
-  >([]);
+  const [entries, setEntries] = useState<{ filename: string; url: string }[]>(
+    []
+  );
   const [index, setIndex] = useState<number>(-1);
   const [imageData, setImageData] = useState<{
     url: string;
