@@ -27,13 +27,13 @@ export default function About() {
       {selectedTab === "Bio" ? (
         <>
           <BioSection
-            imageSrc="/images/Headshot_about_2024.jpg"
+            imageSrc="/images/web/about_Headshot+2024.jpg"
             imageAlt="Headshot of Malena Strauch"
             text={bioFirst.trim() + "between reality and abstraction."}
             imageLeft={true}
           />
           <BioSection
-            imageSrc="/images/gallery/2025/The+Golden+Gap_2025_Oil+on+Canvas_24x30_370.jpg"
+            imageSrc="images/web/about_the+golden+gap.jpg"
             imageAlt="The Golden Gap Painting"
             text={bioSecond.trim()}
             imageLeft={false}
