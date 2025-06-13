@@ -29,13 +29,14 @@ export default function HamburgerMenu() {
         <ul className="absolute right-0 mt-2 bg-white shadow-md border rounded p-2 text-sm space-y-1 text-right">
           {links.map((link) => (
             <li key={link.to}>
+                    {/* remove duplication of hover colors # */}
               <Link
                 to={link.to}
                 onClick={closeMenu}
                 className={`block px-2 py-1 ${
                   location.pathname === link.to
                     ? "text-blue-600"
-                    : "hover:text-blue-500"
+                    : "hover:text-amber-600"
                 }`}
               >
                 {link.name}

@@ -81,8 +81,8 @@ const NavLinks = ({ onClick }: { onClick: () => void }) => {
             onClick={onClick}
             className={`block px-2 py-1 ${
               location.pathname === link.to
-                ? "text-blue-500"
-                : "hover:text-blue-400"
+                ? "text-cyan-600"
+                : "hover:text-amber-600"
             }`}
           >
             {link.name}
