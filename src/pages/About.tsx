@@ -38,13 +38,13 @@ export default function About() {
         <>
         {/* ##modify trim() + ... */}
           <BioSection
-            imageSrc="/images/web/about_Headshot+2024.jpg"
+            imageSrc="/public/images/web/about_Headshot+2024.jpg"
             imageAlt="Headshot of Malena Strauch"
             text={bioFirst.trim() + "between reality and abstraction."}
             imageLeft={true}
           />
           <BioSection
-            imageSrc="images/web/about_the+golden+gap.jpg"
+            imageSrc="/public/images/web/about_the+golden+gap.jpg"
             imageAlt="The Golden Gap Painting"
             text={bioSecond.trim()}
             imageLeft={false}
@@ -53,21 +53,21 @@ export default function About() {
       ) : (
         <>
         <BioSection
-          imageSrc="/images/web/about+statement_waldstruktur.jpg"
+          imageSrc="/public/images/web/about+statement_waldstruktur.jpg"
           imageAlt="Waldstruktur - Painting"
           text={statementFirst.trim()}
           imageLeft={true}
         />
 
         <BioSection
-          imageSrc="/images/web/about+statement_transcending+space.jpg"
+          imageSrc="/public/images/web/about+statement_transcending+space.jpg"
           imageAlt="Transcending Space - Painting"
           text={statementSecond.trim()}
           imageLeft={false}
         />
 
         <BioSection
-          imageSrc="/images/web/about+statement_fullness.jpg"
+          imageSrc="/public/images/web/about+statement_fullness.jpg"
           imageAlt="Fullness"
           text={statementThird.trim()}
           imageLeft={true}
