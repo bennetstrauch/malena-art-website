@@ -17,15 +17,26 @@ Rather than painting real places, I construct my own spaces from fragments of ph
 
 My process is flexible — I work mostly with acrylic and oil on canvas, sometimes focusing on a single piece, and other times moving between multiple works in progress. This back-and-forth approach allows ideas to pass from one painting to another.`;
 
+// const [statementFirst, statementSecond, statementThird] = statement.split(
+//   /(?<=Rather.*?)\n+|(?<=My process.*?)\n+/s
+// );
+const statementFirst = `In my current work, I explore the merging of nature and architecture, weaving together organic landscapes with built structures in ways that feel both familiar and surreal. I’m drawn to the tension between these worlds and enjoy creating scenes that feel grounded yet dreamlike, inviting questions about space, boundaries, and perception.`;
+
+const statementSecond = `Rather than painting real places, I construct my own spaces from fragments of photographs, my surroundings, memories, and imagination. I layer and distort these elements until they become something new — spaces that feel suspended between memory and presence. Through shifts in formal elements such as shape, color, and perspective, I change the rhythm of the painting and encourage the viewer to move through the painting intuitively, sometimes with a sense of disorientation.`;
+
+const statementThird = `My process is flexible — I work mostly with acrylic and oil on canvas, sometimes focusing on a single piece, and other times moving between multiple works in progress. This back-and-forth approach allows ideas to pass from one painting to another.`;
+
+
 export default function About() {
   const [selectedTab, setSelectedTab] = useState("Bio");
 
   return (
-    <div className="px-6 py-12 max-w-5xl mx-auto">
+    <div className="px-6 py-0 max-w-5xl mx-auto">
       <TabSelector tabs={tabs} selectedTab={selectedTab} onSelect={setSelectedTab} />
 
       {selectedTab === "Bio" ? (
         <>
+        {/* ##modify trim() + ... */}
           <BioSection
             imageSrc="/images/web/about_Headshot+2024.jpg"
             imageAlt="Headshot of Malena Strauch"
@@ -40,7 +51,29 @@ export default function About() {
           />
         </>
       ) : (
-        <div className="mt-8 text-lg leading-relaxed whitespace-pre-line">{statement}</div>
+        <>
+        <BioSection
+          imageSrc="/images/web/about+statement_waldstruktur.jpg"
+          imageAlt="Waldstruktur - Painting"
+          text={statementFirst.trim()}
+          imageLeft={true}
+        />
+
+        <BioSection
+          imageSrc="/images/web/about+statement_transcending+space.jpg"
+          imageAlt="Transcending Space - Painting"
+          text={statementSecond.trim()}
+          imageLeft={false}
+        />
+
+        <BioSection
+          imageSrc="/images/web/about+statement_fullness.jpg"
+          imageAlt="Fullness"
+          text={statementThird.trim()}
+          imageLeft={true}
+        />
+          
+          </>
       )}
     </div>
   );
