@@ -20,7 +20,7 @@ const BioSection: React.FC<BioSectionProps> = ({ imageSrc, imageAlt, text, image
         alt={imageAlt}
         className="w-full md:w-1/2 h-auto object-cover rounded-lg shadow"
       />
-      <p className="text-lg leading-relaxed md:w-1/2 whitespace-pre-line">{text}</p>
+      <p className="text-base md:text-lg leading-relaxed md:w-1/2 whitespace-pre-line">{text}</p>
     </div>
   );
 };
