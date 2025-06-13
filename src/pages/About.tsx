@@ -2,6 +2,12 @@
 import { useState } from "react";
 import TabSelector from "../components/TabSelector";
 import BioSection from "../components/BioSection";
+import HeadshotImage from "../assets/web/about_Headshot+2024.jpg";
+import GoldenGapImage from "../assets/web/about_the+golden+gap.jpg";
+import FullnessImage from "../assets/web/about+statement_fullness.jpg";
+import TranscendingImage from "../assets/web/about+statement_transcending+space.jpg";
+import WaldstrukturImage from "../assets/web/about+statement_waldstruktur.jpg";
+
 
 const tabs = ["Bio", "Artist Statement"];
 
@@ -36,15 +42,14 @@ export default function About() {
 
       {selectedTab === "Bio" ? (
         <>
-        {/* ##modify trim() + ... */}
           <BioSection
-            imageSrc="/public/images/web/about_Headshot+2024.jpg"
+            imageSrc={HeadshotImage}
             imageAlt="Headshot of Malena Strauch"
             text={bioFirst.trim() + "between reality and abstraction."}
             imageLeft={true}
           />
           <BioSection
-            imageSrc="/public/images/web/about_the+golden+gap.jpg"
+            imageSrc={GoldenGapImage}
             imageAlt="The Golden Gap Painting"
             text={bioSecond.trim()}
             imageLeft={false}
@@ -52,29 +57,29 @@ export default function About() {
         </>
       ) : (
         <>
-        <BioSection
-          imageSrc="/public/images/web/about+statement_waldstruktur.jpg"
-          imageAlt="Waldstruktur - Painting"
-          text={statementFirst.trim()}
-          imageLeft={true}
-        />
+          <BioSection
+            imageSrc={WaldstrukturImage}
+            imageAlt="Waldstruktur - Painting"
+            text={statementFirst.trim()}
+            imageLeft={true}
+          />
 
-        <BioSection
-          imageSrc="/public/images/web/about+statement_transcending+space.jpg"
-          imageAlt="Transcending Space - Painting"
-          text={statementSecond.trim()}
-          imageLeft={false}
-        />
+          <BioSection
+            imageSrc={TranscendingImage}
+            imageAlt="Transcending Space - Painting"
+            text={statementSecond.trim()}
+            imageLeft={false}
+          />
 
-        <BioSection
-          imageSrc="/public/images/web/about+statement_fullness.jpg"
-          imageAlt="Fullness"
-          text={statementThird.trim()}
-          imageLeft={true}
-        />
-          
-          </>
+          <BioSection
+            imageSrc={FullnessImage}
+            imageAlt="Fullness"
+            text={statementThird.trim()}
+            imageLeft={true}
+          />
+        </>
       )}
     </div>
   );
 }
+
