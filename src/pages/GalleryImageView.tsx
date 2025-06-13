@@ -1,5 +1,5 @@
 // src/pages/GalleryImageView.tsx
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { parseImageFilename } from "../utility/ParserImageFilename";
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
@@ -13,6 +13,8 @@ const allImages = import.meta.glob("/public/images/gallery/*/*.jpg", {
 
 export default function GalleryImageView() {
   const { year, filename } = useParams();
+  const [searchParams] = useSearchParams();
+  const showPrice = searchParams.get("show-price") === "true";
   const navigate = useNavigate();
   const [entries, setEntries] = useState<{ filename: string; url: string }[]>(
     []
@@ -109,7 +111,7 @@ export default function GalleryImageView() {
         <p className="italic text-lg">{imageData.title}</p>
         <p className="text-sm">
           {imageData.year}, {imageData.material}, {imageData.size}"
-          {parseFloat(imageData.price) > 0 ? `, $${imageData.price}` : ""}
+          { showPrice && (parseFloat(imageData.price) > 0 ? `, $${imageData.price}` : "")}
         </p>
       </div>
     </div>

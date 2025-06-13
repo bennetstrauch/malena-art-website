@@ -36,7 +36,7 @@ export default function Sales() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {imagesForSale.map((img) => (
           <div key={img.filename} className="group transition-all text-center">
-            <Link to={`/gallery/${img.year}/${img.filename}`}>
+            <Link to={`/gallery/${img.year}/${img.filename}?show-price=true`}>
               <img
                 src={img.url}
                 alt={img.title}
