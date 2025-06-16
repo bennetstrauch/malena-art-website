@@ -2,15 +2,16 @@ import { Link } from "react-router-dom";
 import { isMobile } from "../pages/Home";
 
 interface LandingPaintingProps {
+  ref?: React.RefObject<HTMLDivElement | null>;
   image: string;
   title: string;
   to: string;
   style?: React.CSSProperties;
 }
 
-const LandingPainting = ({ image, title, to, style }: LandingPaintingProps) => (
+const LandingPainting = ({ ref, image, title, to, style }: LandingPaintingProps) => (
    <Link to={to} className="absolute" style={style}>
-    <div className="flex flex-col items-end group cursor-pointer"
+    <div ref={ref} className="flex flex-col items-end group cursor-pointer"
          style={{ width: '20vw', minWidth: '100px', maxWidth:'200px', fontSize: '2.4vw'}}>
       <img
         src={image}
