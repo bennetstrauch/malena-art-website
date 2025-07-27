@@ -8,7 +8,18 @@ cloudinary.v2.config({
 });
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const year = req.query.year as string;
+//   CORS:
+ res.setHeader("Access-Control-Allow-Origin", "*"); // Allow all origins
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    res.status(200).end(); // Handle preflight
+    return;
+  }
+  
+//   LOGIC:
+    const year = req.query.year as string;
   if (!year) return res.status(400).json({ error: 'Missing year' });
 
   try {

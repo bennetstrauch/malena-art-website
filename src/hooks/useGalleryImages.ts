@@ -15,6 +15,7 @@ export type ImageEntry = {
   url: string;
 };
 
+const BASE_URL = "https://malena-website-react.vercel.app"; // or preview URL
 
 export function useGalleryImages(
   year: string,
@@ -22,26 +23,26 @@ export function useGalleryImages(
 ) {
   const [imageEntries, setImageEntries] = useState<ImageEntry[]>([]);
 
-  useEffect(() => {
+ useEffect(() => {
     const loadImages = async () => {
-      const matchingFiles = Object.entries(allImages).filter(([path]) =>
-        path.includes(`/${year}/`)
-      );
+      try {
+        const res = await fetch(`${BASE_URL}/api/getImages?year=${year}`);
+        const filenames: string[] = await res.json();
 
-      const entries: ImageEntry[] = [];
-
-      for (const [path, importer] of matchingFiles) {
-        try {
-          const url = await importer();
-          const filename = path.split("/").pop()!;
+        const entries: ImageEntry[] = filenames.map((filename) => {
           const metadata = parseImageFilename(filename);
-          entries.push({ ...metadata, filename, url });
-        } catch (error) {
-          console.error(`Error parsing image "${path}":`, error);
-        }
-      }
+          return {
+            ...metadata,
+            filename,
+            year,
+            url: `https://res.cloudinary.com/${import.meta.env.VITE_CLOUDINARY_BASE_URL}/image/upload/gallery/${year}/${filename}.jpg`,
+          };
+        });
 
-      setImageEntries(filter ? entries.filter(filter) : entries);
+        setImageEntries(filter ? entries.filter(filter) : entries);
+      } catch (error) {
+        console.error("Failed to load images:", error);
+      }
     };
 
     loadImages();
