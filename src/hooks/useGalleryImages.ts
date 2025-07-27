@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { parseImageFilename } from "../utility/ParserImageFilename";
 
-const allImages = import.meta.glob("/public/images/gallery/*/*.jpg", {
-  as: "url",
-});
+// const allImages = import.meta.glob("/public/images/gallery/*/*.jpg", {
+//   as: "url",
+// });
 
 export type ImageEntry = {
   title: string;
