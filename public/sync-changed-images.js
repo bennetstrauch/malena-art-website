@@ -1,6 +1,6 @@
 import { execSync } from "child_process";
 import path from "path";
-import { cloudinary, cloudinaryFolder, localFolder, log, __dirname, getCloudPath } from "./cloudinary-utils.mjs";
+import { cloudinary, cloudinaryFolder, localFolder, log, __dirname, getCloudPath, generateIndexFiles } from "./cloudinary-utils.mjs";
 
 
 
@@ -125,3 +125,5 @@ async function runSync() {
 }
 
 await runSync();
+
+generateIndexFiles();

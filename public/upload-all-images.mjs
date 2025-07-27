@@ -90,4 +90,5 @@ async function uploadAllImages() {
 }
 
 await uploadAllImages();
+generateIndexFiles();
 
