@@ -1,9 +1,26 @@
+// {
+//   "extends": "./tsconfig.node.json",
+//   "compilerOptions": {
+//     "noEmit": false,
+//     "allowImportingTsExtensions": false, 
+//     "outDir": "./dist"
+//   },
+//   "include": ["api/**/*.ts"]
+// }
+
+// tsconfig.api.json
 {
-  "extends": "./tsconfig.node.json",
   "compilerOptions": {
-    "noEmit": false,
-    "allowImportingTsExtensions": false, 
-    "outDir": "./dist"
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "outDir": "./dist/api",
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
   },
-  "include": ["api/**/*.ts"]
+  "include": ["api/**/*.ts"],
+  "exclude": ["node_modules"]
 }
