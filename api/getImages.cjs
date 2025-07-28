@@ -1,5 +1,5 @@
-import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { v2 as cloudinary } from "cloudinary";
+// api/getImages.cjs
+const { v2: cloudinary } = require('cloudinary');
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -7,7 +7,8 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+module.exports = async (req, res) => {
+  // Set CORS headers
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -16,24 +17,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).end();
   }
 
-  const year = req.query.year as string;
+  const year = req.query.year;
   if (!year) {
-    return res.status(400).json({ error: "Missing year" });
+    return res.status(400).json({ error: 'Missing year' });
   }
 
   try {
     const result = await cloudinary.search
-      .expression(`folder:${process.env.VITE_CLOUDINARY_FOLDER}/${year}`)
-      .sort_by("public_id", "desc")
+      .expression(`folder:${process.env.CLOUDINARY_FOLDER}/${year}`)
+      .sort_by('public_id', 'desc')
       .max_results(100)
       .execute();
-
+    
     res.status(200).json(result.resources);
   } catch (e) {
-    if (e instanceof Error) {
-      res
-        .status(500)
-        .json({ error: "Failed to fetch images", details: e.message });
-    }
+    console.error("Cloudinary Function Error:", e);
+    res.status(500).json({ error: 'Failed to fetch images', details: e.message });
   }
-}
+};
