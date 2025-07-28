@@ -44,7 +44,6 @@ async function uploadImage(relPath) {
   try {
     log(`Uploading: ${relPath}`);
     await cloudinary.v2.uploader.upload(fullPath, {
-      folder: 
       public_id: cloudPath,
       overwrite: true,
       resource_type: "image",
