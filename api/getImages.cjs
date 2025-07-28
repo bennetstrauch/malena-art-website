@@ -1,5 +1,5 @@
-import { VercelRequest, VercelResponse } from '@vercel/node';
-import cloudinary from 'cloudinary';
+
+const cloudinary = require('cloudinary');
 
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -7,19 +7,17 @@ cloudinary.v2.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-//   CORS:
- res.setHeader("Access-Control-Allow-Origin", "*"); // Allow all origins
+module.exports = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
   if (req.method === "OPTIONS") {
-    res.status(200).end(); // Handle preflight
+    res.status(200).end();
     return;
   }
-  
-//   LOGIC:
-    const year = req.query.year as string;
+
+  const year = req.query.year;
   if (!year) return res.status(400).json({ error: 'Missing year' });
 
   try {
@@ -34,4 +32,4 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   } catch (e) {
     res.status(500).json({ error: 'Failed to fetch images', details: e });
   }
-}
+};
