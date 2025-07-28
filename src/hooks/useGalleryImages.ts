@@ -15,7 +15,7 @@ export type ImageEntry = {
   url: string;
 };
 
-const BASE_URL = "https://malena-website-react.vercel.app"; // or preview URL
+const BASE_URL = "https:/malenastrauch.vercel.app"; // or preview URL
 
 export function useGalleryImages(
   year: string,
