@@ -35,7 +35,7 @@ export function useGalleryImages(
             ...metadata,
             filename,
             year,
-            url: `https://res.cloudinary.com/${import.meta.env.VITE_CLOUDINARY_BASE_URL}/image/upload/gallery/${year}/${filename}.jpg`,
+            url: `https://res.cloudinary.com/${import.meta.env.VITE_CLOUDINARY_BASE_URL}/image/upload/malena-site/gallery/${year}/${filename}.jpg`,
           };
         });
 

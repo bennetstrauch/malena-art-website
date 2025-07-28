@@ -28,6 +28,9 @@ module.exports = async (req, res) => {
       .sort_by('public_id', 'desc')
       .max_results(100)
       .execute();
+
+      console.log('Cloudinary search result:', result);
+
     
     res.status(200).json(result.resources);
   } catch (e) {
