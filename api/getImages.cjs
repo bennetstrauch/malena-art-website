@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
 
   try {
     const result = await cloudinary.search
-      .expression(`public_id.starts_with:gallery/${year}/`)
+      .expression(`public_id.starts_with:malena-site/gallery/${year}`)
       .sort_by('public_id', 'desc')
       .max_results(100)
       .execute();
