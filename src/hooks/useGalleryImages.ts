@@ -15,7 +15,7 @@ export type ImageEntry = {
   url: string;
 };
 
-const BASE_URL = "https:/malenastrauch.vercel.app"; // or preview URL
+const BASE_URL = "https://malenastrauch.vercel.app"; // or preview URL
 
 export function useGalleryImages(
   year: string,
@@ -47,6 +47,8 @@ export function useGalleryImages(
 
     loadImages();
   }, [year, filter]);
+
+  console.log(`Image entries for year ${year}:`, imageEntries);
 
   return imageEntries;
 }
