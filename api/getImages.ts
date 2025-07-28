@@ -24,7 +24,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const result = await cloudinary.v2.search
-      .expression(`folder:your_folder/${year}`)
+      .expression(`folder:${process.env.CLOUDINARY_FOLDER}/${year}`)
       .sort_by('public_id', 'desc')
       .max_results(100)
       .execute();
