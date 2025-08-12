@@ -8,33 +8,45 @@ cloudinary.config({
 });
 
 module.exports = async (req, res) => {
-  // Set CORS headers
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST,OPTIONS");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
+  if (req.method === "OPTIONS") return res.status(200).end();
 
   const year = req.query.year;
-  if (!year) {
-    return res.status(400).json({ error: 'Missing year' });
-  }
+  if (!year) return res.status(400).json({ error: 'Missing year' });
+
+  res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=120");
 
   try {
-    const result = await cloudinary.search
-      .expression(`public_id:malena-site/gallery/${year}/`)
-      .sort_by('public_id', 'desc')
-      .max_results(100)
-      .execute();
+    const prefix = `malena-site/gallery/${year}/`;
+    let resources = [];
+    let next_cursor = undefined;
+    do {
+      const opts = { type: 'upload', prefix, max_results: 500 };
+      if (next_cursor) opts.next_cursor = next_cursor;
+      const r = await cloudinary.api.resources(opts);
+      console.log('cloudinary.api.resources chunk:', { returned: r.resources?.length, next_cursor: r.next_cursor, total_count: r.total_count });
+      resources = resources.concat(r.resources || []);
+      next_cursor = r.next_cursor;
+    } while (next_cursor);
 
-      console.log('Cloudinary search result:', result);
+    const mapped = (resources || []).map(r => ({
+      public_id: r.public_id,
+      filename: r.public_id.split('/').pop(),
+      url: r.secure_url,
+      width: r.width,
+      height: r.height,
+      created_at: r.created_at,
+    }));
 
-    
-    res.status(200).json(result.resources);
+    return res.status(200).json({ total: mapped.length, resources: mapped });
   } catch (e) {
     console.error("Cloudinary Function Error:", e);
-    res.status(500).json({ error: 'Failed to fetch images', details: e.message });
+    const status = e.http_code || e.statusCode || e.status || 500;
+    if (status === 429) {
+      return res.status(429).json({ error: 'Rate limited by Cloudinary', details: e.message || e.toString() });
+    }
+    return res.status(500).json({ error: 'Failed to fetch images', details: e.message || e.toString() });
   }
 };

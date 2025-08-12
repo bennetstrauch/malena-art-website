@@ -1,4 +1,4 @@
-// cloudinary-utils.js
+// scripts/cloudinary-utils.mjs
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -6,10 +6,8 @@ import cloudinary from "cloudinary";
 import fs from "fs";
 import { globSync } from "glob";
 
-// Load .env variables
 dotenv.config();
 
-// Setup __dirname for ESM
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
 
@@ -21,9 +19,10 @@ cloudinary.v2.config({
 });
 
 export const cloudinaryFolder = process.env.CLOUDINARY_FOLDER || "malena-site";
-export const localFolder = path.join(__dirname, "images");
 
-// Logger helper
+// POINT TO YOUR REPO'S public/images FOLDER
+export const localFolder = path.join(process.cwd(), "public", "images");
+
 export const log = (...args) => {
   const timestamp = new Date().toISOString().replace("T", " ").split(".")[0];
   console.log(`[${timestamp}]`, ...args);
@@ -31,20 +30,15 @@ export const log = (...args) => {
 
 export { cloudinary };
 
-
 export function getCloudPath(relPath) {
-  return path.posix
-    .join(cloudinaryFolder, relPath)
-    .replace(/&/g, "and").replace(/\\/g, "/");
+  // ensure forward-slashes for Cloudinary public_id
+  return path.posix.join(cloudinaryFolder, relPath).replace(/&/g, "and").replace(/\\/g, "/");
 }
 
-
-
-
-
 export function generateIndexFiles() {
-  const basePath = path.join(__dirname, "..", "public", "images", "gallery");
-  const outputPath = path.join(__dirname, "..", "src", "data");
+  // your existing generator - writes TS files from local public/images/gallery/*
+  const basePath = path.join(process.cwd(), "public", "images", "gallery");
+  const outputPath = path.join(process.cwd(), "src", "data");
 
   const allFiles = globSync("**/*.{jpg,jpeg,png}", { cwd: basePath, nodir: true });
 
@@ -66,10 +60,6 @@ export function generateIndexFiles() {
   }
 }
 
-
-/**
- * Ensures a directory exists (recursively creates it if needed)
- */
 function ensureDirExists(filePath) {
   const dir = path.dirname(filePath);
   if (!fs.existsSync(dir)) {

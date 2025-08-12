@@ -5,9 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/generate-manifest.mjs",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sync:images": "node --experimental-modules scripts/sync-images.mjs",
+    "generate:manifest": "node --experimental-modules scripts/generate-manifest.mjs"
   },
   "dependencies": {
     "@cloudinary/react": "^1.14.3",
@@ -40,4 +43,7 @@
     "typescript-eslint": "^8.30.1",
     "vite": "^6.3.5"
   }
+
+
+
 }

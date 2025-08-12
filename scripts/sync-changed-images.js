@@ -4,39 +4,7 @@ import { cloudinary, cloudinaryFolder, localFolder, log, __dirname, getCloudPath
 
 
 
-function getChangedFiles() {
-  const output = execSync("git status --porcelain", { encoding: "utf-8" });
-  const added = [];
-  const deleted = [];
-  const renamed = [];
-  const imagePrefix = "public/images/";
 
-  output.split("\n").forEach((line) => {
-    const file = line.slice(3).trim();
-    if (!file.startsWith(imagePrefix)) return;
-
-    const relPath = file.replace(imagePrefix, "");
-
-    // Handles new (??) and modified (M) files
-    if (line.startsWith("??") || line.startsWith(" M")) {
-      added.push(relPath);
-    }
-    // Handles deleted ( D) files
-    else if (line.startsWith(" D")) {
-      deleted.push(relPath);
-    }
-    // Handles renamed (R) files
-    else if (line.startsWith("R ")) {
-      const [oldFile, newFile] = file.split(" -> ");
-      renamed.push({
-        oldPath: oldFile.replace(imagePrefix, ""),
-        newPath: newFile.replace(imagePrefix, ""),
-      });
-    }
-  });
-
-  return { added, deleted, renamed };
-}
 
 async function uploadImage(relPath) {
   const fullPath = path.join(localFolder, relPath);
