@@ -29,6 +29,8 @@ export function useGalleryImages(
       setLoading(true);
       setError(null);
 
+      // ## test changing files script and make useable
+
       try {
         const res = await fetch(`${BASE_URL}/api/getImages?year=${year}`);
         if (!res.ok) {
@@ -44,7 +46,6 @@ export function useGalleryImages(
         }
 
         const entries: ImageEntry[] = data.resources.map((r) => {
-
           const metadata = parseImageFilename(r.filename);
           const thumbUrl = r.url.replace(
             "/upload/",
