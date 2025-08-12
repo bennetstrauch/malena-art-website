@@ -44,12 +44,18 @@ export function useGalleryImages(
         }
 
         const entries: ImageEntry[] = data.resources.map((r) => {
+
           const metadata = parseImageFilename(r.filename);
+          const thumbUrl = r.url.replace(
+            "/upload/",
+            "/upload/w_300,h_300,c_fill/"
+          );
           return {
             ...metadata,
             filename: r.filename,
             year,
             url: r.url, // API already provides full URL
+            thumbnailUrl: thumbUrl,
           };
         });
 
