@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { parseImageFilename } from "../utility/ParserImageFilename";
 
-// const allImages = import.meta.glob("/public/images/gallery/*/*.jpg", {
-//   as: "url",
-// });
-
 export type ImageEntry = {
   title: string;
   year: string;
@@ -15,40 +11,69 @@ export type ImageEntry = {
   url: string;
 };
 
-const BASE_URL = "https://malenastrauch.vercel.app"; // or preview URL
+const BASE_URL = "https://malenastrauch.vercel.app"; // adjust if running locally
 
 export function useGalleryImages(
   year: string,
   filter?: (img: ImageEntry) => boolean
 ) {
   const [imageEntries, setImageEntries] = useState<ImageEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
- useEffect(() => {
+  useEffect(() => {
+    let cancelled = false;
+
     const loadImages = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
         const res = await fetch(`${BASE_URL}/api/getImages?year=${year}`);
-        const filenames: string[] = await res.json();
+        if (!res.ok) {
+          throw new Error(`Failed to fetch images: ${res.status} ${res.statusText}`);
+        }
 
-        const entries: ImageEntry[] = filenames.map((filename) => {
-          const metadata = parseImageFilename(filename);
+        const data: { total: number; resources: any[] } = await res.json();
+
+        if (!Array.isArray(data.resources)) {
+          throw new Error("Invalid API response: 'resources' is not an array");
+        }
+
+        const entries: ImageEntry[] = data.resources.map((r) => {
+          const metadata = parseImageFilename(r.filename);
           return {
             ...metadata,
-            filename,
+            filename: r.filename,
             year,
-            url: `https://res.cloudinary.com/${import.meta.env.VITE_CLOUDINARY_BASE_URL}/image/upload/malena-site/gallery/${year}/${filename}.jpg`,
+            url: r.url, // API already provides full URL
           };
         });
 
-        setImageEntries(filter ? entries.filter(filter) : entries);
-      } catch (error) {
-        console.error("Failed to load images:", error);
+        if (!cancelled) {
+          setImageEntries(filter ? entries.filter(filter) : entries);
+        }
+      } catch (err: any) {
+        if (!cancelled) {
+          setError(err.message || "Unknown error");
+          setImageEntries([]);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     };
 
     loadImages();
+
+    return () => {
+      cancelled = true; // avoid state updates after unmount
+    };
   }, [year, filter]);
 
   console.log(`Image entries for year ${year}:`, imageEntries);
 
-  return imageEntries;
+  return { imageEntries, loading, error };
 }
+
