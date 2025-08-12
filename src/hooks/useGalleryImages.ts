@@ -9,6 +9,7 @@ export type ImageEntry = {
   price: string;
   filename: string;
   url: string;
+  thumbnailUrl: string; // thumbnail image
 };
 
 const BASE_URL = "https://malenastrauch.vercel.app"; // adjust if running locally
@@ -31,7 +32,9 @@ export function useGalleryImages(
       try {
         const res = await fetch(`${BASE_URL}/api/getImages?year=${year}`);
         if (!res.ok) {
-          throw new Error(`Failed to fetch images: ${res.status} ${res.statusText}`);
+          throw new Error(
+            `Failed to fetch images: ${res.status} ${res.statusText}`
+          );
         }
 
         const data: { total: number; resources: any[] } = await res.json();
@@ -76,4 +79,3 @@ export function useGalleryImages(
 
   return { imageEntries, loading, error };
 }
-

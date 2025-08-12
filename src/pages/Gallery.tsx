@@ -4,6 +4,8 @@ import TabSelector from "../components/TabSelector";
 import { Link } from "react-router-dom";
 import { useGalleryImages } from "../hooks/useGalleryImages";
 
+// ## next step - load thumbnails
+
 const years = ["2025", "2024", "2023"];
 
 export default function Gallery() {
@@ -52,7 +54,7 @@ export default function Gallery() {
                 onClick={handleImageClick}
               >
                 <img
-                  src={img.url}
+                  src={img.thumbnailUrl}
                   alt={img.title}
                   className="w-full h-auto object-cover group-hover:opacity-80"
                 />
@@ -65,4 +67,3 @@ export default function Gallery() {
     </div>
   );
 }
-
