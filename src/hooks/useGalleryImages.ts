@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { parseImageFilename } from "../utility/ParserImageFilename";
 
 export type ImageEntry = {
@@ -21,15 +21,14 @@ export function useGalleryImages(
   const [imageEntries, setImageEntries] = useState<ImageEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const cancelRef = useRef(false);
 
   useEffect(() => {
-    let cancelled = false;
+    cancelRef.current = false;
 
     const loadImages = async () => {
       setLoading(true);
       setError(null);
-
-      // ## test changing files script and make useable
 
       try {
         const res = await fetch(`${BASE_URL}/api/getImages?year=${year}`);
@@ -55,21 +54,29 @@ export function useGalleryImages(
             ...metadata,
             filename: r.filename,
             year,
-            url: r.url, // API already provides full URL
+            url: r.url,
             thumbnailUrl: thumbUrl,
           };
         });
 
-        if (!cancelled) {
-          setImageEntries(filter ? entries.filter(filter) : entries);
+        // ## fix sales
+
+        // Apply filter if provided
+        // const filteredEntries = filter ? entries.filter(filter) : entries;
+
+        if (!cancelRef.current) {
+          // Avoid setting state if data did not change (simple JSON compare)
+          if (!cancelRef.current) {
+            setImageEntries(filter ? entries.filter(filter) : entries);
+          }
         }
       } catch (err: any) {
-        if (!cancelled) {
+        if (!cancelRef.current) {
           setError(err.message || "Unknown error");
           setImageEntries([]);
         }
       } finally {
-        if (!cancelled) {
+        if (!cancelRef.current) {
           setLoading(false);
         }
       }
@@ -78,11 +85,9 @@ export function useGalleryImages(
     loadImages();
 
     return () => {
-      cancelled = true; // avoid state updates after unmount
+      cancelRef.current = true;
     };
-  }, [year, filter]);
-
-  console.log(`Image entries for year ${year}:`, imageEntries);
+  }, [year]);
 
   return { imageEntries, loading, error };
 }
