@@ -26,7 +26,7 @@ const Navbar = () => {
           <Link
             to="/"
             onClick={closeMenu}
-            className="text-xl font-semibold tracking-wide"
+            className="text-xl font-semibold tracking-wide truncate break-words"
           >
             MALENA STRAUCH
           </Link>

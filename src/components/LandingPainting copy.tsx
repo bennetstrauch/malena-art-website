@@ -14,14 +14,14 @@ interface LandingPaintingProps {
 const LandingPainting = React.forwardRef<HTMLDivElement, LandingPaintingProps>(
   ({ image, title, to, style, isMobilePortrait = false, width = "20vw", onImageLoad }, ref) => {
     return (
-      <Link to={to} style={style}>
+      <Link to={to} className="absolute" style={style}>
         <div
           ref={ref}
           className="flex flex-col items-end group cursor-pointer"
           style={{
             width,
-            minWidth: "100px",
-            maxWidth: "260px",
+            minWidth: "15vw",
+            maxWidth: "28vw",
             fontSize: "2.4vw",
           }}
         >
