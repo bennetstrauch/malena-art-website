@@ -14,13 +14,11 @@ export default function Home(): React.JSX.Element {
   const BOTTOM_GAP_VH = 0.10; // vertical gap from bottom for the bottom painting (vh)
   const MOBILE_PAINTING_WIDTH = "28vw";
   const DESKTOP_PAINTING_WIDTH = "15vw";
-  const MOBILE_COLUMN_NUDGE_PX = 8; // small horizontal gap between brush and column
+  const MOBILE_COLUMN_NUDGE_PX = 80; // small horizontal gap between brush and column
   const BRUSH_TIP_OFFSET_PX = 30; // distance from artist's right edge to approximate brush tip
   let DESKTOP_VERTICAL_STEP = 140; // px vertical stagger on desktop
-  const DESKTOP_HORIZONTAL_STEP = 210; // px horizontal stagger on desktop
   /* ------------------------------------------------------------- */
 
-  const navRef = useRef<HTMLDivElement | null>(null);
 
 // later, after render
 
@@ -33,15 +31,7 @@ export default function Home(): React.JSX.Element {
         setAnchor({ top: r.top, right: r.left + r.width });
       }
       setIsMobilePortrait(window.innerWidth <= 768 && window.innerHeight > window.innerWidth);
-      setViewport({ w: window.innerWidth, h: window.innerHeight });
-
-      if (navRef.current) {
-  const rect = navRef.current.getBoundingClientRect();
-  const navHeight = rect.height; // height of navbar
-  const navBottom = rect.bottom; // distance from viewport top to lower end of navbar
-  console.log("Navbar height:", navHeight);
-  console.log("Navbar bottom:", navBottom);
-}
+      setViewport({ w: window.innerWidth, h: window.innerHeight })
 
     }
 
@@ -141,6 +131,7 @@ export default function Home(): React.JSX.Element {
 
   const desktopPositions = computeDesktopPositions();
   const mobileLeft = computeMobileLeft();
+  console.log("Mobile left position:", mobileLeft, "brushX:", brushX);
 
   return (
     <div className="relative w-full h-full bg-white overflow-hidden">
