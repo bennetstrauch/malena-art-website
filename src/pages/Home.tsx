@@ -79,7 +79,7 @@ export default function Home(): React.JSX.Element {
     const measuredWidth = measured?.width ?? 200;
     const measuredHeight = measured?.height ?? 140;
     // base top uses artist top so the first painting aligns vertically with brush
-    let baseTop = anchor.top - 100 || Math.round(viewport.h * 0.25);
+    const baseTop = 0
     const baseLeft = brushX + 10; // a little right from brushX
 
     // Available width after brush and some margin
@@ -88,6 +88,8 @@ export default function Home(): React.JSX.Element {
   console.log("Available width for paintings:", availableWidth);
     const availableHeight = viewport.h - baseTop - 40; // 40px margin on the bottom
   console.log("Available height for paintings:", availableHeight);
+  console.log("Height-to-width ratio:", availableHeight / availableWidth);
+  const heightToWidthRatio = availableHeight / availableWidth;
 
 
 
@@ -101,29 +103,32 @@ export default function Home(): React.JSX.Element {
   // Optional: scale painting width based on available horizontal space
   // ######## scale min of availableHight - deductionSavety / divide by something or so.
   const scaleFactorWidth = (availableWidth - deductionSafety) / (measuredWidth * paintings.length);
-  const scaleFactorHeight = (availableHeight) / (measuredHeight);
+  const scaleFactorHeight = (availableHeight) / (measuredHeight + 50);
   console.log("available height for paintings:", availableHeight, "measuredheight:", measuredHeight);
   console.log("Scale factors - width:", scaleFactorWidth, "height:", scaleFactorHeight);
   const scale = Math.min(scaleFactorWidth, scaleFactorHeight);
   console.log("Scale factor:", scale);
 
-  if (scaleFactorHeight > scaleFactorWidth){
-
-  }
+ 
   const paintingWidth = Math.round(measuredWidth * scale);
   paintingSize = paintingWidth;
 
-  DESKTOP_VERTICAL_STEP = availableHeight / 4;
+  DESKTOP_VERTICAL_STEP = availableHeight / 3.8;
+
+  if (heightToWidthRatio < 0.438 ){
+    DESKTOP_VERTICAL_STEP = DESKTOP_VERTICAL_STEP * 0.2;
+  }
+
+  console.log("Adjusted DESKTOP_VERTICAL_STEP:", DESKTOP_VERTICAL_STEP);
 
     // const a = { top: baseTop - Math.round(measuredHeight * 0.05), left: baseLeft };
     // const b = { top: baseTop + DESKTOP_VERTICAL_STEP, left: baseLeft + DESKTOP_HORIZONTAL_STEP };
     // const c = { top: baseTop + Math.round(DESKTOP_VERTICAL_STEP * 0.5), left: baseLeft + Math.round(DESKTOP_HORIZONTAL_STEP * 1.8) };
 
 
-    baseTop = 0
      const a = { top: baseTop, left: baseLeft };
     const b = { top: baseTop + DESKTOP_VERTICAL_STEP, left: baseLeft + stepH };
-    const c = { top: baseTop + Math.round(DESKTOP_VERTICAL_STEP * 0.1), left: baseLeft + Math.round(stepH * 2) };
+    const c = { top: baseTop + Math.round(DESKTOP_VERTICAL_STEP * 0.15), left: baseLeft + Math.round(stepH * 2) };
 
     return [a, b, c];
   };

@@ -17,7 +17,6 @@ const LandingPainting = React.forwardRef<HTMLDivElement, LandingPaintingProps>(
     { image, title, to, style, isMobilePortrait = false, width = "20vw", height = "auto", onImageLoad },
     ref
   ) => {
-    console.log("Rendering LandingPainting:", title, "with width:", width, "and height:", height);
     return (
       <Link to={to} style={{ textDecoration: "none" }}>
         <div
