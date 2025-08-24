@@ -1,48 +1,60 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LandingPainting from "../components/LandingPainting";
 
-function Home() {
+export default function Home(): React.JSX.Element {
   const artistRef = useRef<HTMLImageElement | null>(null);
   const paintingRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [anchor, setAnchor] = useState<{ top: number; right: number }>({ top: 0, right: 0 });
   const [isMobilePortrait, setIsMobilePortrait] = useState(false);
+  const [viewport, setViewport] = useState({ w: typeof window !== "undefined" ? window.innerWidth : 0, h: typeof window !== "undefined" ? window.innerHeight : 0 });
   const [measured, setMeasured] = useState<{ width: number; height: number } | null>(null);
-  const [viewportHeight, setViewportHeight] = useState<number>(typeof window !== "undefined" ? window.innerHeight : 0);
-  const [viewportWidth, setViewportWidth] = useState<number>(typeof window !== "undefined" ? window.innerWidth : 0);
 
-  // tweakables
-  const NAV_GAP_VH = 0.02; // gap from nav (vh)
-  const BOTTOM_GAP_VH = 0.18; // gap from bottom (vh)
-  const MIN_VERTICAL_GAP = 40; // px minimum acceptable gap
-  const MOBILE_NUDGE_X = -20;
+  /* -------------------- Tweakable constants -------------------- */
+  const NAV_GAP_VH = 0.02; // vertical gap from top for the top painting (vh)
+  const BOTTOM_GAP_VH = 0.10; // vertical gap from bottom for the bottom painting (vh)
+  const MOBILE_PAINTING_WIDTH = "28vw";
+  const DESKTOP_PAINTING_WIDTH = "15vw";
+  const MOBILE_COLUMN_NUDGE_PX = 8; // small horizontal gap between brush and column
+  const BRUSH_TIP_OFFSET_PX = 30; // distance from artist's right edge to approximate brush tip
+  let DESKTOP_VERTICAL_STEP = 140; // px vertical stagger on desktop
+  const DESKTOP_HORIZONTAL_STEP = 210; // px horizontal stagger on desktop
+  /* ------------------------------------------------------------- */
 
-  const FLOOR_MIN_PX = 60;
-  const FLOOR_VIEWPORT_FRACTION = 0.12;
-  const FLOOR_MARGIN = 8;
+  const navRef = useRef<HTMLDivElement | null>(null);
 
-  // update anchor and layout flags
+// later, after render
+
+
   useEffect(() => {
-    function updatePosition() {
+    function update() {
+      // update anchor rect (artist)
       if (artistRef.current) {
-        const rect = artistRef.current.getBoundingClientRect();
-        setAnchor({ top: rect.top, right: rect.left + rect.width });
+        const r = artistRef.current.getBoundingClientRect();
+        setAnchor({ top: r.top, right: r.left + r.width });
       }
-      const portrait = window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
-      setIsMobilePortrait(portrait);
-      setViewportHeight(window.innerHeight);
-      setViewportWidth(window.innerWidth);
+      setIsMobilePortrait(window.innerWidth <= 768 && window.innerHeight > window.innerWidth);
+      setViewport({ w: window.innerWidth, h: window.innerHeight });
+
+      if (navRef.current) {
+  const rect = navRef.current.getBoundingClientRect();
+  const navHeight = rect.height; // height of navbar
+  const navBottom = rect.bottom; // distance from viewport top to lower end of navbar
+  console.log("Navbar height:", navHeight);
+  console.log("Navbar bottom:", navBottom);
+}
+
     }
 
-    updatePosition();
-    window.addEventListener("resize", updatePosition);
-    window.addEventListener("orientationchange", updatePosition);
+    update();
+    window.addEventListener("resize", update);
+    window.addEventListener("orientationchange", update);
     return () => {
-      window.removeEventListener("resize", updatePosition);
-      window.removeEventListener("orientationchange", updatePosition);
+      window.removeEventListener("resize", update);
+      window.removeEventListener("orientationchange", update);
     };
   }, []);
 
-  const paintingSize = isMobilePortrait ? "28vw" : "15vw";
+  let paintingSize : number | string = isMobilePortrait ? MOBILE_PAINTING_WIDTH : DESKTOP_PAINTING_WIDTH;
 
   const handlePaintingImageLoad = (index: number) => {
     const el = paintingRefs.current[index];
@@ -51,71 +63,69 @@ function Home() {
     setMeasured({ width: r.width, height: r.height });
   };
 
-  // floor limit (desktop correction)
-  const floorHeightPx = Math.max(FLOOR_MIN_PX, viewportHeight * FLOOR_VIEWPORT_FRACTION);
-  const floorLimitY = viewportHeight - floorHeightPx;
+  // compute brushX (where paintings should start horizontally)
+  const brushX = (() => {
+    const right = anchor.right || Math.max(48, viewport.w * 0.12);
+    return Math.max(8, Math.round(right - BRUSH_TIP_OFFSET_PX)); // ensure not negative
+  })();
 
-  // DESKTOP LOGIC
-  const computeDesktopPositions = () => {
-    const measuredHeight = measured?.height ?? 200;
-    const measuredWidth = measured?.width ?? 150;
-    const baseTop = anchor.top - 35;
-    const baseLeft = anchor.right - 15;
-    const spacingMultiplier = 1.9;
-
-    const lefts = [
-      baseLeft,
-      baseLeft * spacingMultiplier + measuredWidth * 0.6,
-      baseLeft * spacingMultiplier * 1.5 + measuredWidth * 1.15,
-    ];
-    const tops = [
-      baseTop - measuredHeight * 0.05,
-      baseTop + measuredHeight * 0.65,
-      baseTop + measuredHeight * 0.15,
-    ];
-
-    // floor correction
-    const limit = floorLimitY - FLOOR_MARGIN;
-    for (let i = 0; i < tops.length; i++) {
-      const bottom = tops[i] + measuredHeight;
-      if (bottom > limit) {
-        tops[i] -= bottom - limit;
-      }
-    }
-
-    const results: { top: number; left: number; scale: number }[] = [];
-    for (let i = 0; i < 3; i++) results.push({ top: tops[i], left: lefts[i], scale: 1 });
-    return results;
+  // MOBILE: column positioning is done by CSS (flex + justify-between)
+  const computeMobileLeft = () => {
+    return brushX + MOBILE_COLUMN_NUDGE_PX;
   };
 
-  // MOBILE/TABLET LOGIC
-  const computeMobilePositions = () => {
-    const brushX = (anchor.right || 60) + MOBILE_NUDGE_X;
-    const zoneWidth = viewportWidth - brushX;
+  // DESKTOP: simple staggered absolute layout; still anchored to brushX
+  const computeDesktopPositions = () => {
+    const measuredWidth = measured?.width ?? 200;
+    const measuredHeight = measured?.height ?? 140;
+    // base top uses artist top so the first painting aligns vertically with brush
+    let baseTop = anchor.top - 100 || Math.round(viewport.h * 0.25);
+    const baseLeft = brushX + 10; // a little right from brushX
 
-    const measuredHeight = measured?.height ?? 200;
-    const measuredWidth = measured?.width ?? 150;
+    // Available width after brush and some margin
+  const availableWidth = viewport.w - baseLeft - 40; // 40px margin on the right
+  const numGaps = paintings.length - 1;
+  console.log("Available width for paintings:", availableWidth);
+    const availableHeight = viewport.h - baseTop - 40; // 40px margin on the bottom
+  console.log("Available height for paintings:", availableHeight);
 
-    const firstTop = NAV_GAP_VH * viewportHeight;
-    const thirdTop = viewportHeight - (BOTTOM_GAP_VH * viewportHeight) - measuredHeight;
-    const middleTop = (firstTop + measuredHeight + thirdTop) / 2 - measuredHeight / 2;
 
-    // check gaps
-    const gap1 = middleTop - (firstTop + measuredHeight);
-    const gap2 = thirdTop - (middleTop + measuredHeight);
 
-    let scale = 1;
-    if (gap1 > MIN_VERTICAL_GAP && gap2 > MIN_VERTICAL_GAP && zoneWidth > measuredWidth * 1.2) {
-      // scale up a bit to use space
-      const extraScale = Math.min(1.3, zoneWidth / measuredWidth);
-      scale = extraScale;
-    }
+  // Horizontal step depends on available width
+  const deductionSafety = availableWidth * 0.3;
 
-    return [
-      { top: firstTop, left: brushX, scale },
-      { top: middleTop, left: brushX, scale },
-      { top: thirdTop, left: brushX, scale },
-    ];
+  const stepH = Math.floor((availableWidth - deductionSafety * 1) / numGaps);
+  console.log("Horizontal step size:", stepH);
+
+  
+  // Optional: scale painting width based on available horizontal space
+  // ######## scale min of availableHight - deductionSavety / divide by something or so.
+  const scaleFactorWidth = (availableWidth - deductionSafety) / (measuredWidth * paintings.length);
+  const scaleFactorHeight = (availableHeight) / (measuredHeight);
+  console.log("available height for paintings:", availableHeight, "measuredheight:", measuredHeight);
+  console.log("Scale factors - width:", scaleFactorWidth, "height:", scaleFactorHeight);
+  const scale = Math.min(scaleFactorWidth, scaleFactorHeight);
+  console.log("Scale factor:", scale);
+
+  if (scaleFactorHeight > scaleFactorWidth){
+
+  }
+  const paintingWidth = Math.round(measuredWidth * scale);
+  paintingSize = paintingWidth;
+
+  DESKTOP_VERTICAL_STEP = availableHeight / 4;
+
+    // const a = { top: baseTop - Math.round(measuredHeight * 0.05), left: baseLeft };
+    // const b = { top: baseTop + DESKTOP_VERTICAL_STEP, left: baseLeft + DESKTOP_HORIZONTAL_STEP };
+    // const c = { top: baseTop + Math.round(DESKTOP_VERTICAL_STEP * 0.5), left: baseLeft + Math.round(DESKTOP_HORIZONTAL_STEP * 1.8) };
+
+
+    baseTop = 0
+     const a = { top: baseTop, left: baseLeft };
+    const b = { top: baseTop + DESKTOP_VERTICAL_STEP, left: baseLeft + stepH };
+    const c = { top: baseTop + Math.round(DESKTOP_VERTICAL_STEP * 0.1), left: baseLeft + Math.round(stepH * 2) };
+
+    return [a, b, c];
   };
 
   const paintings = [
@@ -124,55 +134,107 @@ function Home() {
     { image: "/images/painting3.jpg", title: "About", to: "/about" },
   ];
 
-  const positions = isMobilePortrait ? computeMobilePositions() : computeDesktopPositions();
+  const desktopPositions = computeDesktopPositions();
+  const mobileLeft = computeMobileLeft();
 
   return (
-    <div className="relative w-full h-full overflow-hidden bg-white">
-      {/* Background Wall */}
+    <div className="relative w-full h-full bg-white overflow-hidden">
+      {/* Background wall behind everything */}
       <img
         src="/images/extra-long-wall-short-floor.jpg"
         alt="Gallery Wall"
-        className="absolute bottom-0 left-0 z-0 pointer-events-none"
-        style={{ height: "100%", width: "auto", objectFit: "cover", objectPosition: "left bottom" }}
+        style={{
+          position: "absolute",
+          left: 0,
+          bottom: 0,
+          height: "100%",
+          width: "auto",
+          objectFit: "cover",
+          objectPosition: "left bottom",
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
       />
 
-      {/* Paintings */}
-      <div className="absolute top-0 left-0 w-full h-full z-10 pointer-events-auto">
-        {paintings.map((p, index) => {
-          const pos = positions[index];
-          return (
+      {/* paintings container */}
+      {isMobilePortrait ? (
+        // MOBILE: single column placed to the right of artist (brushX). Browser lays out vertical spacing via justify-between.
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: `${mobileLeft}px`,
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between", // distribute first/middle/last between top and bottom
+            alignItems: "flex-start",
+            paddingTop: `${NAV_GAP_VH * 100}vh`,
+            paddingBottom: `${BOTTOM_GAP_VH * 100}vh`,
+            gap: "1rem",
+            zIndex: 20,
+            pointerEvents: "auto",
+          }}
+        >
+          {paintings.map((p, idx) => (
             <LandingPainting
-              ref={(el: HTMLDivElement | null) => {
-                paintingRefs.current[index] = el;
-              }}
               key={p.title}
+              ref={(el: HTMLDivElement | null) => {
+                paintingRefs.current[idx] = el;
+              }}
               image={p.image}
               title={p.title}
               to={p.to}
-              isMobilePortrait={isMobilePortrait}
+              isMobilePortrait
               width={paintingSize}
-              onImageLoad={() => handlePaintingImageLoad(index)}
-              style={{
-                position: "absolute",
-                width: `calc(${paintingSize} * ${pos.scale})`,
-                top: `${Math.round(pos.top)}px`,
-                left: `${Math.round(pos.left)}px`,
-              }}
+              onImageLoad={() => handlePaintingImageLoad(idx)}
+              style={{}} // no absolute positioning here
             />
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      ) : (
+        // DESKTOP: absolute, staggered layout anchored to brushX
+        <div style={{ position: "absolute", inset: 0, zIndex: 15, pointerEvents: "auto" }}>
+          {paintings.map((p, idx) => {
+            const pos = desktopPositions[idx];
+            return (
+              <LandingPainting
+                key={p.title}
+                ref={(el: HTMLDivElement | null) => {
+                  paintingRefs.current[idx] = el;
+                }}
+                image={p.image}
+                title={p.title}
+                to={p.to}
+                isMobilePortrait={false}
+                width={paintingSize}
+                onImageLoad={() => handlePaintingImageLoad(idx)}
+                style={{
+                  position: "absolute",
+                  left: `${pos.left}px`,
+                  top: `${pos.top}px`,
+                }}
+              />
+            );
+          })}
+        </div>
+      )}
 
-      {/* Foreground Artist */}
+      {/* Artist (foreground) — keep visible and on top */}
       <img
         ref={artistRef}
         src="/images/artist_extracted.png"
-        alt="Malena painting"
-        className="absolute left-0 z-20 pointer-events-none"
-        style={{ bottom: "1px", objectFit: "contain", maxHeight: "85vh" }}
+        alt="Artist"
+        style={{
+          position: "absolute",
+          left: 0,
+          bottom: 1,
+          objectFit: "contain",
+          maxHeight: "85vh",
+          zIndex: 30, // above paintings
+          pointerEvents: "none",
+        }}
       />
     </div>
   );
 }
-
-export default Home;

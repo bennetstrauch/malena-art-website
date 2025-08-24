@@ -5,24 +5,31 @@ interface LandingPaintingProps {
   image: string;
   title: string;
   to: string;
-  style?: React.CSSProperties;
+  style?: React.CSSProperties; // ✅ just React.CSSProperties
   isMobilePortrait?: boolean;
-  width?: string; // e.g. "20vw"
-  onImageLoad?: () => void; // notify parent when image finished loading
+  width?: string | number;
+  height?: string | number;
+  onImageLoad?: () => void;
 }
 
 const LandingPainting = React.forwardRef<HTMLDivElement, LandingPaintingProps>(
-  ({ image, title, to, style, isMobilePortrait = false, width = "20vw", onImageLoad }, ref) => {
+  (
+    { image, title, to, style, isMobilePortrait = false, width = "20vw", height = "auto", onImageLoad },
+    ref
+  ) => {
+    console.log("Rendering LandingPainting:", title, "with width:", width, "and height:", height);
     return (
-      <Link to={to} style={style}>
+      <Link to={to} style={{ textDecoration: "none" }}>
         <div
           ref={ref}
           className="flex flex-col items-end group cursor-pointer"
           style={{
+            height,
             width,
             minWidth: "100px",
-            maxWidth: "260px",
+            // maxWidth: "260px",
             fontSize: "2.4vw",
+            ...style, // ✅ allow parent to pass positioning
           }}
         >
           <img
