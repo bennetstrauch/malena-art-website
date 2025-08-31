@@ -14,30 +14,31 @@ export default function Home(): React.JSX.Element {
   const BOTTOM_GAP_VH = 0.10; // vertical gap from bottom for the bottom painting (vh)
   const MOBILE_PAINTING_WIDTH = "28vw";
   const DESKTOP_PAINTING_WIDTH = "15vw";
-  const MOBILE_COLUMN_NUDGE_PX = -10; // small horizontal gap between brush and column
+  const MOBILE_COLUMN_NUDGE_PX = -6; // small horizontal gap between brush and column
   const BRUSH_TIP_OFFSET_PX = 30; // distance from artist's right edge to approximate brush tip
   let DESKTOP_VERTICAL_STEP = 140; // px vertical stagger on desktop
   /* ------------------------------------------------------------- */
 
 
 // later, after render
-
+function updateAnchor() {
+  if (artistRef.current) {
+    const r = artistRef.current.getBoundingClientRect();
+    setAnchor({ top: r.top, right: r.left + r.width });
+  }
+}
 
   useEffect(() => {
     function update() {
-      // update anchor rect (artist)
-      if (artistRef.current) {
-        const r = artistRef.current.getBoundingClientRect();
-        setAnchor({ top: r.top, right: r.left + r.width });
-      }
+      updateAnchor();
       setIsMobilePortrait(window.innerWidth <= 768 && window.innerHeight > window.innerWidth);
       setViewport({ w: window.innerWidth, h: window.innerHeight })
-
     }
 
     update();
     window.addEventListener("resize", update);
     window.addEventListener("orientationchange", update);
+   
     return () => {
       window.removeEventListener("resize", update);
       window.removeEventListener("orientationchange", update);
@@ -221,6 +222,7 @@ export default function Home(): React.JSX.Element {
         ref={artistRef}
         src="/images/artist_extracted.png"
         alt="Artist"
+        onLoad={updateAnchor}
         style={{
           position: "absolute",
           left: 0,
