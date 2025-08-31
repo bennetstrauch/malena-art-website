@@ -56,7 +56,7 @@ export default function Home(): React.JSX.Element {
   // compute brushX (where paintings should start horizontally)
   const brushX = (() => {
     const right = anchor.right || Math.max(48, viewport.w * 0.12);
-    return Math.max(8, Math.round(right - BRUSH_TIP_OFFSET_PX)); // ensure not negative
+    return Math.max(150, Math.round(right - BRUSH_TIP_OFFSET_PX)); // ensure not negative
   })();
 
   // MOBILE: column positioning is done by CSS (flex + justify-between)
