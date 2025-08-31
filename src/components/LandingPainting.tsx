@@ -14,7 +14,16 @@ interface LandingPaintingProps {
 
 const LandingPainting = React.forwardRef<HTMLDivElement, LandingPaintingProps>(
   (
-    { image, title, to, style, isMobilePortrait = false, width = "20vw", height = "auto", onImageLoad },
+    {
+      image,
+      title,
+      to,
+      style,
+      isMobilePortrait = false,
+      width = "20vw",
+      height = "auto",
+      onImageLoad,
+    },
     ref
   ) => {
     return (
@@ -38,12 +47,26 @@ const LandingPainting = React.forwardRef<HTMLDivElement, LandingPaintingProps>(
             draggable={false}
             onLoad={() => onImageLoad && onImageLoad()}
           />
-          <span
-            className="mt-1 text-gray-700 group-hover:text-blue-600 text-right mr-2"
-            style={isMobilePortrait ? { fontSize: "3vh" } : {}}
-          >
-            {title}
-          </span>
+         <span
+  className={`
+    mt-1.5 text-right 
+    font-normal uppercase tracking-wide 
+    text-gray-800 
+    transition-all duration-500 ease-out 
+    group-hover:font-semibold 
+    group-hover:text-[#D4A373]   /* schönes Sand-Orange */
+translate-x-1
+  `}
+ style={{
+    ...(isMobilePortrait 
+      ? { fontSize: "3vh" } 
+      : { fontSize: "2vw", letterSpacing: "0.15em" }),
+  }}
+>
+  {title}
+</span>
+
+
         </div>
       </Link>
     );
