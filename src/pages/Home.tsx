@@ -14,7 +14,7 @@ export default function Home(): React.JSX.Element {
   const BOTTOM_GAP_VH = 0.10; // vertical gap from bottom for the bottom painting (vh)
   const MOBILE_PAINTING_WIDTH = "28vw";
   const DESKTOP_PAINTING_WIDTH = "15vw";
-  const MOBILE_COLUMN_NUDGE_PX = 80; // small horizontal gap between brush and column
+  const MOBILE_COLUMN_NUDGE_PX = -10; // small horizontal gap between brush and column
   const BRUSH_TIP_OFFSET_PX = 30; // distance from artist's right edge to approximate brush tip
   let DESKTOP_VERTICAL_STEP = 140; // px vertical stagger on desktop
   /* ------------------------------------------------------------- */
