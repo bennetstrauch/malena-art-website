@@ -13,9 +13,7 @@ const tabs = ["Bio", "Artist Statement"];
 
 const fullBio = `Malena Strauch (b. 2001, Rosenheim, Germany) is a visual artist based in Fairfield, Iowa. Her paintings explore the intersection of natural landscapes and architectural structures, creating spaces that feel both grounded and dreamlike. She draws from real-life observation, photographs, memories, and imagination to build layered compositions that blur the line between reality and abstraction.
 
-Strauch earned her BFA summa cum laude from Maharishi International University in 2024, where she was Valedictorian and received the Outstanding Student Award in Art. She is currently pursuing her MA in Studio Art at MIU, with her thesis exhibition scheduled for June 2025 at the Wege Gallery.`;
-
-const [bioFirst, bioSecond] = fullBio.split("between reality and abstraction.");
+Strauch earned her BFA summa cum laude from Maharishi International University in 2024, where she was Valedictorian and received the Outstanding Student Award in Art. She completed her MA in Studio Art at MIU in June 2025, presenting her thesis exhibition at the Wege Gallery. In February 2026, Strauch also became a certified teacher of Transcendental Meditation.`;
 
 // const statement = `In my current work, I explore the merging of nature and architecture, weaving together organic landscapes with built structures in ways that feel both familiar and surreal. I’m drawn to the tension between these worlds and enjoy creating scenes that feel grounded yet dreamlike, inviting questions about space, boundaries, and perception.
 
