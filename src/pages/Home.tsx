@@ -20,16 +20,15 @@ export default function Home(): React.JSX.Element {
   } | null>(null);
 
   /* -------------------- Tweakable constants -------------------- */
-  const NAV_GAP_VH = 0.02; // vertical gap from top for the top painting (vh)
-  const BOTTOM_GAP_VH = 0.1; // vertical gap from bottom for the bottom painting (vh)
+  const NAV_GAP_VH = 0.02;
+  const BOTTOM_GAP_VH = 0.1;
   const MOBILE_PAINTING_WIDTH = "28vw";
   const DESKTOP_PAINTING_WIDTH = "15vw";
-  const MOBILE_COLUMN_NUDGE_PX = -6; // small horizontal gap between brush and column
-  const BRUSH_TIP_OFFSET_PX = 30; // distance from artist's right edge to approximate brush tip
-  let DESKTOP_VERTICAL_STEP = 140; // px vertical stagger on desktop
+  const MOBILE_COLUMN_NUDGE_PX = -6;
+  const BRUSH_TIP_OFFSET_PX = 30;
+  let DESKTOP_VERTICAL_STEP = 140;
   /* ------------------------------------------------------------- */
 
-  // later, after render
   function updateAnchor() {
     if (artistRef.current) {
       const r = artistRef.current.getBoundingClientRect();
@@ -67,59 +66,33 @@ export default function Home(): React.JSX.Element {
     setMeasured({ width: r.width, height: r.height });
   };
 
-  // compute brushX (where paintings should start horizontally)
   const brushX = (() => {
     const right = anchor.right || Math.max(48, viewport.w * 0.12);
-    return Math.max(150, Math.round(right - BRUSH_TIP_OFFSET_PX)); // ensure not negative
+    return Math.max(150, Math.round(right - BRUSH_TIP_OFFSET_PX));
   })();
 
-  // MOBILE: column positioning is done by CSS (flex + justify-between)
   const computeMobileLeft = () => {
     return brushX + MOBILE_COLUMN_NUDGE_PX;
   };
 
-  // DESKTOP: simple staggered absolute layout; still anchored to brushX
   const computeDesktopPositions = () => {
     const measuredWidth = measured?.width ?? 200;
     const measuredHeight = measured?.height ?? 140;
-    // base top uses artist top so the first painting aligns vertically with brush
     const baseTop = 0;
-    const baseLeft = brushX + 10; // a little right from brushX
+    const baseLeft = brushX + 10;
 
-    // Available width after brush and some margin
-    const availableWidth = viewport.w - baseLeft - 40; // 40px margin on the right
+    const availableWidth = viewport.w - baseLeft - 40;
     const numGaps = paintings.length - 1;
-    console.log("Available width for paintings:", availableWidth);
-    const availableHeight = viewport.h - baseTop - 40; // 40px margin on the bottom
-    console.log("Available height for paintings:", availableHeight);
-    console.log("Height-to-width ratio:", availableHeight / availableWidth);
+    const availableHeight = viewport.h - baseTop - 40;
     const heightToWidthRatio = availableHeight / availableWidth;
 
-    // Horizontal step depends on available width
     const deductionSafety = availableWidth * 0.3;
-
     const stepH = Math.floor((availableWidth - deductionSafety * 1) / numGaps);
-    console.log("Horizontal step size:", stepH);
 
-    // Optional: scale painting width based on available horizontal space
-    // ######## scale min of availableHight - deductionSavety / divide by something or so.
     const scaleFactorWidth =
       (availableWidth - deductionSafety) / (measuredWidth * paintings.length);
     const scaleFactorHeight = availableHeight / (measuredHeight + 50);
-    console.log(
-      "available height for paintings:",
-      availableHeight,
-      "measuredheight:",
-      measuredHeight
-    );
-    console.log(
-      "Scale factors - width:",
-      scaleFactorWidth,
-      "height:",
-      scaleFactorHeight
-    );
     const scale = Math.min(scaleFactorWidth, scaleFactorHeight);
-    console.log("Scale factor:", scale);
 
     const paintingWidth = Math.round(measuredWidth * scale);
     paintingSize = paintingWidth;
@@ -129,12 +102,6 @@ export default function Home(): React.JSX.Element {
     if (heightToWidthRatio < 0.438) {
       DESKTOP_VERTICAL_STEP = DESKTOP_VERTICAL_STEP * 0.2;
     }
-
-    console.log("Adjusted DESKTOP_VERTICAL_STEP:", DESKTOP_VERTICAL_STEP);
-
-    // const a = { top: baseTop - Math.round(measuredHeight * 0.05), left: baseLeft };
-    // const b = { top: baseTop + DESKTOP_VERTICAL_STEP, left: baseLeft + DESKTOP_HORIZONTAL_STEP };
-    // const c = { top: baseTop + Math.round(DESKTOP_VERTICAL_STEP * 0.5), left: baseLeft + Math.round(DESKTOP_HORIZONTAL_STEP * 1.8) };
 
     const a = { top: baseTop, left: baseLeft };
     const b = { top: baseTop + DESKTOP_VERTICAL_STEP, left: baseLeft + stepH };
@@ -154,23 +121,21 @@ export default function Home(): React.JSX.Element {
 
   const desktopPositions = computeDesktopPositions();
   const mobileLeft = computeMobileLeft();
-  console.log("Mobile left position:", mobileLeft, "brushX:", brushX);
 
-  // Animation variants for LandingPaintings
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
       transition: {
-        delayChildren: 1.5,  
-        staggerChildren: 0.8, // Delay zwischen Kindern
+        delayChildren: 1.5,
+        staggerChildren: 0.8,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { y: -50, opacity: 0 }, // Start: leicht nach oben versetzt
-    show: { y: 0, opacity: 1 }, // Ziel: normale Position
+    hidden: { y: -50, opacity: 0 },
+    show: { y: 0, opacity: 1 },
   };
 
   return (
@@ -194,7 +159,7 @@ export default function Home(): React.JSX.Element {
 
       {/* paintings container */}
       {isMobilePortrait ? (
-        // MOBILE: single column placed to the right of artist (brushX). Browser lays out vertical spacing via justify-between.
+        // MOBILE: single column placed to the right of artist (brushX)
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -206,7 +171,7 @@ export default function Home(): React.JSX.Element {
             height: "100%",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-between", // distribute first/middle/last between top and bottom
+            justifyContent: "space-between",
             alignItems: "flex-start",
             paddingTop: `${NAV_GAP_VH * 100}vh`,
             paddingBottom: `${BOTTOM_GAP_VH * 100}vh`,
@@ -228,7 +193,7 @@ export default function Home(): React.JSX.Element {
                 isMobilePortrait
                 width={paintingSize}
                 onImageLoad={() => handlePaintingImageLoad(idx)}
-                style={{}} // no absolute positioning here
+                style={{}}
               />
             </motion.div>
           ))}
@@ -272,22 +237,22 @@ export default function Home(): React.JSX.Element {
         </motion.div>
       )}
 
-      {/* Artist (foreground) — keep visible and on top */}
+      {/* Artist (foreground) */}
       <motion.img
         ref={artistRef}
         src="/images/artist_extracted.png"
         alt="Artist"
         onLoad={updateAnchor}
-        initial={{ y: 100, opacity: 0 }} // Start: 100px tiefer und unsichtbar
-        animate={{ y: 0, opacity: 1 }} // Ziel: Position 0 und sichtbar
-        transition={{ duration: 1.2, ease: ["easeIn", "easeOut"], delay: 0.2}}
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1.2, ease: ["easeIn", "easeOut"], delay: 0.2 }}
         style={{
           position: "absolute",
           left: 0,
           bottom: 1,
           objectFit: "contain",
           maxHeight: "85vh",
-          zIndex: 30, // above paintings
+          zIndex: 30,
           pointerEvents: "none",
         }}
       />

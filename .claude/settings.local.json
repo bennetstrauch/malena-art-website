@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -lR /c/Users/strau/OneDrive/Family Share/\\\\\\(0L\\\\\\) Malena/\\\\\\(0\\\\\\) Kunst/\\\\\\(0\\\\\\) Website/malena-website-code/malena-website-react/src/data/)",
+      "Bash(head:*)"
+    ]
+  }
+}
