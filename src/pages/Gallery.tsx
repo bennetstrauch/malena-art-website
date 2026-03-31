@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import TabSelector from "../components/TabSelector";
 import { Link } from "react-router-dom";
 import { useGalleryImages } from "../hooks/useGalleryImages";
+import { useTranslation } from "react-i18next";
 
 // ## next step - load thumbnails
 
@@ -12,6 +13,7 @@ export default function Gallery() {
   const [selectedYear, setSelectedYear] = useState(() => {
     return sessionStorage.getItem("selectedYear") || "2025";
   });
+  const { t } = useTranslation();
 
   const { imageEntries, loading, error } = useGalleryImages(selectedYear);
 
@@ -39,8 +41,8 @@ export default function Gallery() {
         onSelect={setSelectedYear}
       />
 
-      {loading && <p>Loading images...</p>}
-      {error && <p>Error: {error}</p>}
+      {loading && <p>{t("gallery.loading")}</p>}
+      {error && <p>{t("gallery.error", { message: error })}</p>}
 
       {!loading && !error && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

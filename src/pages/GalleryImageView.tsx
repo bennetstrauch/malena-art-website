@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { parseImageFilename } from "../utility/ParserImageFilename";
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import HamburgerMenu from "../components/HamburgerMenuImageView";
+import { useTranslation } from "react-i18next";
 
 const allImages = import.meta.glob("/public/images/gallery/*/*.jpg", {
   as: "url",
@@ -13,6 +14,7 @@ const allImages = import.meta.glob("/public/images/gallery/*/*.jpg", {
 
 export default function GalleryImageView() {
   const { year, filename } = useParams();
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const showPrice = searchParams.get("show-price") === "true";
   const navigate = useNavigate();
@@ -66,7 +68,7 @@ export default function GalleryImageView() {
   const goNext = () => index < entries.length - 1 && setIndex(index + 1);
   const goPrev = () => index > 0 && setIndex(index - 1);
 
-  if (!imageData) return <div>Loading...</div>;
+  if (!imageData) return <div>{t("galleryView.loading")}</div>;
 
   return (
     <div className="fixed inset-0 bg-white z-50 overflow-auto p-4 flex flex-col items-center">

@@ -1,11 +1,13 @@
 // src/components/HamburgerMenu.tsx
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { navLinks } from "./Navbar";
 
 export default function HamburgerMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { t } = useTranslation();
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
@@ -39,7 +41,7 @@ export default function HamburgerMenu() {
                     : "hover:text-amber-600"
                 }`}
               >
-                {link.name}
+                {t(link.labelKey)}
               </Link>
             </li>
           ))}

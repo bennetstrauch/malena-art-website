@@ -3,11 +3,13 @@ import { useGalleryImages, type ImageEntry } from "../hooks/useGalleryImages";
 import TabSelector from "../components/TabSelector";
 import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const years = ["2025", "2024", "2023"];
 
 export default function Sales() {
   const [selectedYear, setSelectedYear] = useState("2025");
+  const { t } = useTranslation();
 
   // ✅ Hook returns { imageEntries, loading, error }
   const { imageEntries: imagesForSale, loading, error } = useGalleryImages(
@@ -20,18 +22,18 @@ export default function Sales() {
   const handleBuyInterest = (img: ImageEntry) => {
     navigate("/contact", {
       state: {
-        subject: `Interest in Buying: ${img.title}, $${img.price}`,
+        subject: t("sales.interestSubject", { title: img.title, price: img.price }),
         image: img.url,
       },
     });
   };
 
   if (loading) {
-    return <p className="p-6">Loading images...</p>;
+    return <p className="p-6">{t("sales.loading")}</p>;
   }
 
   if (error) {
-    return <p className="p-6 text-red-500">Error: {error}</p>;
+    return <p className="p-6 text-red-500">{t("sales.error", { message: error })}</p>;
   }
 
   return (
@@ -62,7 +64,7 @@ export default function Sales() {
               onClick={() => handleBuyInterest(img)}
             >
               <ShoppingCart className="w-4 h-4" />
-              I'm Interested
+              {t("sales.interested")}
             </button>
           </div>
         ))}

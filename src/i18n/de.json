@@ -1,0 +1,48 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "gallery": "Galerie",
+    "sales": "Verkauf",
+    "contact": "Kontakt",
+    "about": "Über mich"
+  },
+  "gallery": {
+    "loading": "Bilder werden geladen...",
+    "error": "Fehler: {{message}}"
+  },
+  "galleryView": {
+    "loading": "Wird geladen..."
+  },
+  "sales": {
+    "loading": "Bilder werden geladen...",
+    "error": "Fehler: {{message}}",
+    "interested": "Ich bin interessiert",
+    "interestSubject": "Kaufinteresse: {{title}}, ${{price}}"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "name": "Name",
+    "email": "E-Mail",
+    "subject": "Betreff",
+    "message": "Nachricht",
+    "send": "Nachricht senden",
+    "sending": "Wird gesendet...",
+    "success": "Nachricht erfolgreich gesendet!",
+    "error": "Etwas ist schiefgelaufen. Bitte versuchen Sie es später erneut.",
+    "attachedArtwork": "Angehängtes Kunstwerk:"
+  },
+  "about": {
+    "bioTab": "Biografie",
+    "statementTab": "Künstlerisches Statement",
+    "bioFirst": "Malena Strauch (*2001, Rosenheim, Deutschland) ist eine bildende Künstlerin mit Sitz in München. Ihre Gemälde erkunden die Schnittstelle zwischen natürlichen Landschaften und architektonischen Strukturen und schaffen Räume, die zugleich geerdet und traumhaft wirken. Sie schöpft aus Naturbeobachtung, Fotografien, Erinnerungen und Vorstellungskraft, um vielschichtige Kompositionen zu entwickeln, die die Grenze zwischen Realität und Abstraktion verwischen.",
+    "bioSecond": "Strauch schloss 2024 ihren BFA summa cum laude an der Maharishi International University ab, wo sie Jahrgangsbeste war und den Outstanding Student Award in Art erhielt. Im Juni 2025 absolvierte sie ihren MA in Studio Art an der MIU und präsentierte ihre Abschlussausstellung in der Wege Gallery. Im Februar 2026 wurde Strauch zudem zertifizierte Lehrerin für Transzendentale Meditation.",
+    "statementFirst": "In meiner aktuellen Arbeit erforsche ich die Verschmelzung von Natur und Architektur, indem ich organische Landschaften mit gebauten Strukturen auf eine Weise verwebe, die zugleich vertraut und surreal wirkt. Mich reizt die Spannung zwischen diesen Welten, und ich schaffe gerne Szenen, die geerdet und dennoch traumhaft erscheinen – Szenen, die Fragen über Raum, Grenzen und Wahrnehmung aufwerfen.",
+    "statementSecond": "Anstatt reale Orte zu malen, konstruiere ich eigene Räume aus Fragmenten von Fotografien, meiner Umgebung, Erinnerungen und Vorstellungskraft. Ich schichte und verfremde diese Elemente, bis etwas Neues entsteht – Räume, die zwischen Erinnerung und Gegenwart zu schweben scheinen. Durch Verschiebungen formaler Elemente wie Form, Farbe und Perspektive verändere ich den Rhythmus des Gemäldes und lade die Betrachtenden ein, sich intuitiv durch das Bild zu bewegen – manchmal mit einem Gefühl der Desorientierung.",
+    "statementThird": "Mein Arbeitsprozess ist flexibel – ich arbeite vorwiegend mit Acryl und Öl auf Leinwand, manchmal konzentriert auf ein einzelnes Werk, manchmal zwischen mehreren entstehenden Arbeiten wechselnd. Dieses Hin und Her ermöglicht es, dass Ideen von einem Gemälde zum nächsten wandern.",
+    "headshotAlt": "Porträtfoto von Malena Strauch",
+    "goldenGapAlt": "The Golden Gap – Gemälde",
+    "waldstrukturAlt": "Waldstruktur – Gemälde",
+    "transcendingAlt": "Transcending Space – Gemälde",
+    "fullnessAlt": "Fullness – Gemälde"
+  }
+}

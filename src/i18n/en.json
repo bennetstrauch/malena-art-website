@@ -1,0 +1,48 @@
+{
+  "nav": {
+    "home": "Home",
+    "gallery": "Gallery",
+    "sales": "Sales",
+    "contact": "Contact",
+    "about": "About"
+  },
+  "gallery": {
+    "loading": "Loading images...",
+    "error": "Error: {{message}}"
+  },
+  "galleryView": {
+    "loading": "Loading..."
+  },
+  "sales": {
+    "loading": "Loading images...",
+    "error": "Error: {{message}}",
+    "interested": "I'm Interested",
+    "interestSubject": "Interest in Buying: {{title}}, ${{price}}"
+  },
+  "contact": {
+    "title": "Contact",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "success": "Message sent successfully!",
+    "error": "Something went wrong. Please try again later.",
+    "attachedArtwork": "Attached Artwork:"
+  },
+  "about": {
+    "bioTab": "Bio",
+    "statementTab": "Artist Statement",
+    "bioFirst": "Malena Strauch (b. 2001, Rosenheim, Germany) is a visual artist based in Munich, Germany. Her paintings explore the intersection of natural landscapes and architectural structures, creating spaces that feel both grounded and dreamlike. She draws from real-life observation, photographs, memories, and imagination to build layered compositions that blur the line between reality and abstraction.",
+    "bioSecond": "Strauch earned her BFA summa cum laude from Maharishi International University in 2024, where she was Valedictorian and received the Outstanding Student Award in Art. She completed her MA in Studio Art at MIU in June 2025, presenting her thesis exhibition at the Wege Gallery. In February 2026, Strauch also became a certified teacher of Transcendental Meditation.",
+    "statementFirst": "In my current work, I explore the merging of nature and architecture, weaving together organic landscapes with built structures in ways that feel both familiar and surreal. I'm drawn to the tension between these worlds and enjoy creating scenes that feel grounded yet dreamlike, inviting questions about space, boundaries, and perception.",
+    "statementSecond": "Rather than painting real places, I construct my own spaces from fragments of photographs, my surroundings, memories, and imagination. I layer and distort these elements until they become something new — spaces that feel suspended between memory and presence. Through shifts in formal elements such as shape, color, and perspective, I change the rhythm of the painting and encourage the viewer to move through the painting intuitively, sometimes with a sense of disorientation.",
+    "statementThird": "My process is flexible — I work mostly with acrylic and oil on canvas, sometimes focusing on a single piece, and other times moving between multiple works in progress. This back-and-forth approach allows ideas to pass from one painting to another.",
+    "headshotAlt": "Headshot of Malena Strauch",
+    "goldenGapAlt": "The Golden Gap – Painting",
+    "waldstrukturAlt": "Waldstruktur – Painting",
+    "transcendingAlt": "Transcending Space – Painting",
+    "fullnessAlt": "Fullness – Painting"
+  }
+}

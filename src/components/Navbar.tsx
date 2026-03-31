@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { FaInstagram } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-// ✅ CONSTANTS
+// ✅ CONSTANTS — labelKey maps to i18n keys, to is the route
 export const navLinks = [
-  { name: "Home", to: "/" },
-  { name: "Gallery", to: "/gallery" },
-  { name: "Sales", to: "/sales" },
-  { name: "Contact", to: "/contact" },
-  { name: "About", to: "/about" },
+  { labelKey: "nav.home", to: "/" },
+  { labelKey: "nav.gallery", to: "/gallery" },
+  { labelKey: "nav.sales", to: "/sales" },
+  { labelKey: "nav.contact", to: "/contact" },
+  { labelKey: "nav.about", to: "/about" },
 ];
 
 // ✅ MAIN COMPONENT
@@ -33,7 +34,7 @@ const Navbar = () => {
           <InstagramButton />
         </div>
 
-        {/* Right: Hamburger + Desktop Menu */}
+        {/* Right: Hamburger + Desktop Menu + Language Toggle */}
         <div className="flex items-center space-x-4">
           <button
             onClick={toggleMenu}
@@ -51,8 +52,11 @@ const Navbar = () => {
               <path d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
-          <ul className="hidden md:flex space-x-6 text-sm font-medium">
+          <ul className="hidden md:flex space-x-6 text-sm font-medium items-center">
             <NavLinks onClick={closeMenu} />
+            <li>
+              <LanguageToggle />
+            </li>
           </ul>
         </div>
       </div>
@@ -62,6 +66,9 @@ const Navbar = () => {
         <div className="md:hidden mt-2 flex justify-end">
           <ul className="flex flex-col items-end text-right space-y-2 pr-3 text-sm font-medium">
             <NavLinks onClick={closeMenu} />
+            <li>
+              <LanguageToggle />
+            </li>
           </ul>
         </div>
       )}
@@ -72,6 +79,7 @@ const Navbar = () => {
 // ✅ SUBCOMPONENT: Nav Links
 const NavLinks = ({ onClick }: { onClick: () => void }) => {
   const location = useLocation();
+  const { t } = useTranslation();
   return (
     <>
       {navLinks.map((link) => (
@@ -85,11 +93,40 @@ const NavLinks = ({ onClick }: { onClick: () => void }) => {
                 : "hover:text-amber-600"
             }`}
           >
-            {link.name}
+            {t(link.labelKey)}
           </Link>
         </li>
       ))}
     </>
+  );
+};
+
+// ✅ SUBCOMPONENT: Language Toggle
+const LanguageToggle = () => {
+  const { i18n } = useTranslation();
+  const current = i18n.language.startsWith("de") ? "de" : "en";
+
+  const setLang = (lang: string) => {
+    i18n.changeLanguage(lang);
+    localStorage.setItem("lang", lang);
+  };
+
+  return (
+    <div className="flex items-center text-sm font-medium">
+      <button
+        onClick={() => setLang("en")}
+        className={current === "en" ? "text-cyan-600" : "hover:text-amber-600"}
+      >
+        EN
+      </button>
+      <span className="mx-1 text-gray-300">|</span>
+      <button
+        onClick={() => setLang("de")}
+        className={current === "de" ? "text-cyan-600" : "hover:text-amber-600"}
+      >
+        DE
+      </button>
+    </div>
   );
 };
 

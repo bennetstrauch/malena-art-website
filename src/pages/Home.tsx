@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import LandingPainting from "../components/LandingPainting";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export default function Home(): React.JSX.Element {
+  const { t } = useTranslation();
   const artistRef = useRef<HTMLImageElement | null>(null);
   const paintingRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [anchor, setAnchor] = useState<{ top: number; right: number }>({
@@ -114,9 +116,9 @@ export default function Home(): React.JSX.Element {
   };
 
   const paintings = [
-    { image: "/images/painting1.jpg", title: "Gallery", to: "/gallery" },
-    { image: "/images/painting2.jpg", title: "Contact", to: "/contact" },
-    { image: "/images/painting3.jpg", title: "About", to: "/about" },
+    { image: "/images/painting1.jpg", title: t("nav.gallery"), to: "/gallery" },
+    { image: "/images/painting2.jpg", title: t("nav.contact"), to: "/contact" },
+    { image: "/images/painting3.jpg", title: t("nav.about"), to: "/about" },
   ];
 
   const desktopPositions = computeDesktopPositions();
@@ -181,9 +183,9 @@ export default function Home(): React.JSX.Element {
           }}
         >
           {paintings.map((p, idx) => (
-            <motion.div key={p.title} variants={itemVariants}>
+            <motion.div key={p.to} variants={itemVariants}>
               <LandingPainting
-                key={p.title}
+                key={p.to}
                 ref={(el: HTMLDivElement | null) => {
                   paintingRefs.current[idx] = el;
                 }}
@@ -214,7 +216,7 @@ export default function Home(): React.JSX.Element {
           {paintings.map((p, idx) => {
             const pos = desktopPositions[idx];
             return (
-              <motion.div key={p.title} variants={itemVariants}>
+              <motion.div key={p.to} variants={itemVariants}>
                 <LandingPainting
                   ref={(el: HTMLDivElement | null) => {
                     paintingRefs.current[idx] = el;

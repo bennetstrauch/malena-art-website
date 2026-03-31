@@ -5,6 +5,7 @@ type TabSelectorProps = {
   selectedTab: string;
   onSelect: (tab: string) => void;
   className?: string;
+  labels?: string[];
 };
 
 export default function TabSelector({
@@ -12,6 +13,7 @@ export default function TabSelector({
   selectedTab,
   onSelect,
   className = "",
+  labels,
 }: TabSelectorProps) {
   return (
     // for fixity - conditional param passing if needed w/o somewhere else
@@ -19,7 +21,7 @@ export default function TabSelector({
       <div
         className={`flex justify-center flex-wrap gap-4 mb-8 text-lg ${className}`}
       >
-        {tabs.map((tab) => (
+        {tabs.map((tab, i) => (
           <button
             key={tab}
             onClick={() => onSelect(tab)}
@@ -29,7 +31,7 @@ export default function TabSelector({
                 : "border-transparent hover:border-gray-400"
             }`}
           >
-            {tab}
+            {labels?.[i] ?? tab}
           </button>
         ))}
       </div>

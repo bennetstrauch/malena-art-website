@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import TabSelector from "../components/TabSelector";
 import BioSection from "../components/BioSection";
 import HeadshotImage from "../assets/web/about_Headshot+2024.jpg";
@@ -7,40 +8,34 @@ import FullnessImage from "../assets/web/about+statement_fullness.jpg";
 import TranscendingImage from "../assets/web/about+statement_transcending+space.jpg";
 import WaldstrukturImage from "../assets/web/about+statement_waldstruktur.jpg";
 
-
-const tabs = ["Bio", "Artist Statement"];
-
-const fullBio = `Malena Strauch (b. 2001, Rosenheim, Germany) is a visual artist based in Munich, Germany. Her paintings explore the intersection of natural landscapes and architectural structures, creating spaces that feel both grounded and dreamlike. She draws from real-life observation, photographs, memories, and imagination to build layered compositions that blur the line between reality and abstraction.
-
-Strauch earned her BFA summa cum laude from Maharishi International University in 2024, where she was Valedictorian and received the Outstanding Student Award in Art. She completed her MA in Studio Art at MIU in June 2025, presenting her thesis exhibition at the Wege Gallery. In February 2026, Strauch also became a certified teacher of Transcendental Meditation.`;
-
-const [bioFirst, bioSecond] = fullBio.split("\n\n");
-const statementFirst = `In my current work, I explore the merging of nature and architecture, weaving together organic landscapes with built structures in ways that feel both familiar and surreal. I’m drawn to the tension between these worlds and enjoy creating scenes that feel grounded yet dreamlike, inviting questions about space, boundaries, and perception.`;
-
-const statementSecond = `Rather than painting real places, I construct my own spaces from fragments of photographs, my surroundings, memories, and imagination. I layer and distort these elements until they become something new — spaces that feel suspended between memory and presence. Through shifts in formal elements such as shape, color, and perspective, I change the rhythm of the painting and encourage the viewer to move through the painting intuitively, sometimes with a sense of disorientation.`;
-
-const statementThird = `My process is flexible — I work mostly with acrylic and oil on canvas, sometimes focusing on a single piece, and other times moving between multiple works in progress. This back-and-forth approach allows ideas to pass from one painting to another.`;
-
+const TAB_BIO = "bio";
+const TAB_STATEMENT = "statement";
 
 export default function About() {
-  const [selectedTab, setSelectedTab] = useState("Bio");
+  const { t } = useTranslation();
+  const [selectedTab, setSelectedTab] = useState(TAB_BIO);
 
   return (
     <div className="px-6 py-0 max-w-5xl mx-auto">
-      <TabSelector tabs={tabs} selectedTab={selectedTab} onSelect={setSelectedTab} />
+      <TabSelector
+        tabs={[TAB_BIO, TAB_STATEMENT]}
+        labels={[t("about.bioTab"), t("about.statementTab")]}
+        selectedTab={selectedTab}
+        onSelect={setSelectedTab}
+      />
 
-      {selectedTab === "Bio" ? (
+      {selectedTab === TAB_BIO ? (
         <>
           <BioSection
             imageSrc={HeadshotImage}
-            imageAlt="Headshot of Malena Strauch"
-            text={bioFirst.trim()}
+            imageAlt={t("about.headshotAlt")}
+            text={t("about.bioFirst")}
             imageLeft={true}
           />
           <BioSection
             imageSrc={GoldenGapImage}
-            imageAlt="The Golden Gap Painting"
-            text={bioSecond.trim()}
+            imageAlt={t("about.goldenGapAlt")}
+            text={t("about.bioSecond")}
             imageLeft={false}
           />
         </>
@@ -48,22 +43,22 @@ export default function About() {
         <>
           <BioSection
             imageSrc={WaldstrukturImage}
-            imageAlt="Waldstruktur - Painting"
-            text={statementFirst.trim()}
+            imageAlt={t("about.waldstrukturAlt")}
+            text={t("about.statementFirst")}
             imageLeft={true}
           />
 
           <BioSection
             imageSrc={TranscendingImage}
-            imageAlt="Transcending Space - Painting"
-            text={statementSecond.trim()}
+            imageAlt={t("about.transcendingAlt")}
+            text={t("about.statementSecond")}
             imageLeft={false}
           />
 
           <BioSection
             imageSrc={FullnessImage}
-            imageAlt="Fullness"
-            text={statementThird.trim()}
+            imageAlt={t("about.fullnessAlt")}
+            text={t("about.statementThird")}
             imageLeft={true}
           />
         </>
@@ -71,4 +66,3 @@ export default function About() {
     </div>
   );
 }
-
