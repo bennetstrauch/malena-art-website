@@ -1,16 +1,10 @@
-// src/pages/GalleryImageView.tsx
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { parseImageFilename } from "../utility/ParserImageFilename";
+import { loadYearEntries, toProtectedUrl, type YearEntry } from "../utility/galleryApi";
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import HamburgerMenu from "../components/HamburgerMenuImageView";
 import { useTranslation } from "react-i18next";
-
-const allImages = import.meta.glob("/public/images/gallery/*/*.jpg", {
-  as: "url",
-});
-
-// ##instead of arrows use swipe at phone
 
 export default function GalleryImageView() {
   const { year, filename } = useParams();
@@ -18,9 +12,7 @@ export default function GalleryImageView() {
   const [searchParams] = useSearchParams();
   const showPrice = searchParams.get("show-price") === "true";
   const navigate = useNavigate();
-  const [entries, setEntries] = useState<{ filename: string; url: string }[]>(
-    []
-  );
+  const [entries, setEntries] = useState<YearEntry[]>([]);
   const [index, setIndex] = useState<number>(-1);
   const [imageData, setImageData] = useState<{
     url: string;
@@ -31,37 +23,21 @@ export default function GalleryImageView() {
     price: string;
   } | null>(null);
 
-  // Load all image entries for current year
   useEffect(() => {
-    const load = async () => {
-      const list = await Promise.all(
-        Object.entries(allImages)
-          .filter(([path]) => path.includes(`/${year}/`))
-          .map(async ([path, importer]) => ({
-            filename: path.split("/").pop()!,
-            url: await importer(),
-          }))
-      );
-      list.sort((a, b) => a.filename.localeCompare(b.filename));
-      setEntries(list);
-    };
-    load();
+    if (!year) return;
+    loadYearEntries(year).then(setEntries);
   }, [year]);
 
-  // Once entries loaded, find the index
   useEffect(() => {
     if (entries.length && filename) {
-      const i = entries.findIndex((e) => e.filename === filename);
-      setIndex(i);
+      setIndex(entries.findIndex(e => e.filename === filename));
     }
   }, [entries, filename]);
 
-  // Load selected image data
   useEffect(() => {
     if (index >= 0 && entries[index]) {
       const { filename, url } = entries[index];
-      const parsed = parseImageFilename(filename);
-      setImageData({ ...parsed, url });
+      setImageData({ ...parseImageFilename(filename), url });
     }
   }, [index, entries]);
 
@@ -72,7 +48,6 @@ export default function GalleryImageView() {
 
   return (
     <div className="fixed inset-0 bg-white z-50 overflow-auto p-4 flex flex-col items-center">
-      {/* Back button */}
       <button
         onClick={() => navigate(-1)}
         className="absolute top-4 left-4 text-black hover:text-gray-600"
@@ -80,10 +55,8 @@ export default function GalleryImageView() {
         <ArrowLeft size={32} />
       </button>
 
-      {/* Hamburger menu */}
       <HamburgerMenu />
 
-      {/* Navigation Arrows */}
       {index > 0 && (
         <button
           onClick={goPrev}
@@ -101,19 +74,27 @@ export default function GalleryImageView() {
         </button>
       )}
 
-      {/* Image */}
-      <img
-        src={imageData.url}
-        alt={imageData.title}
-        className="max-w-full max-h-[80vh] object-contain mb-4"
-      />
+      {/* Image with download protection */}
+      <div className="relative select-none">
+        <img
+          src={toProtectedUrl(imageData.url)}
+          alt={imageData.title}
+          draggable={false}
+          onContextMenu={e => e.preventDefault()}
+          className="max-w-full max-h-[80vh] object-contain mb-4"
+        />
+        {/* Transparent overlay blocks drag and right-click */}
+        <div
+          className="absolute inset-0"
+          onContextMenu={e => e.preventDefault()}
+        />
+      </div>
 
-      {/* Details */}
       <div className="text-center">
         <p className="italic text-lg">{imageData.title}</p>
         <p className="text-sm">
           {imageData.year}, {imageData.material}, {imageData.size}"
-          { showPrice && (parseFloat(imageData.price) > 0 ? `, $${imageData.price}` : "")}
+          {showPrice && (parseFloat(imageData.price) > 0 ? `, $${imageData.price}` : "")}
         </p>
       </div>
     </div>
