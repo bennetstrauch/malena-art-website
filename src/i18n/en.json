@@ -2,9 +2,15 @@
   "nav": {
     "home": "Home",
     "gallery": "Gallery",
-    "sales": "Sales",
+    "shop": "Shop",
     "contact": "Contact",
     "about": "About"
+  },
+  "shop": {
+    "title": "Shop",
+    "originalsTitle": "Originals",
+    "calendarTitle": "2027 Art Calendar",
+    "buyCalendar": "Buy Calendar"
   },
   "gallery": {
     "loading": "Loading images...",
@@ -17,7 +23,10 @@
     "loading": "Loading images...",
     "error": "Error: {{message}}",
     "interested": "I'm Interested",
-    "interestSubject": "Interest in Buying: {{title}}, ${{price}}"
+    "interestSubject": "Interest in Buying: {{title}}, ${{price}}",
+    "inquire": "Inquire",
+    "priceOnRequest": "Price on request",
+    "inquirySubject": "Price inquiry: {{title}}"
   },
   "contact": {
     "title": "Contact",

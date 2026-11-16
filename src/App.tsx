@@ -1,12 +1,14 @@
 import "./App.css";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import GalleryImageView from "./pages/GalleryImageView";
-import Sales from "./pages/Sales";
+import Shop from "./pages/Shop";
+import ShopOriginals from "./pages/ShopOriginals";
+import ShopCalendar from "./pages/ShopCalendar";
 
 function App() {
   return (
@@ -17,7 +19,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/gallery" element={<Gallery />} />
-            <Route path="/sales" element={<Sales />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/shop/originals" element={<ShopOriginals />} />
+            <Route path="/shop/calendar" element={<ShopCalendar />} />
+            {/* Old /sales URL redirects to the new Shop */}
+            <Route path="/sales" element={<Navigate to="/shop" replace />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
             <Route path="/gallery/:year/:filename" element={<GalleryImageView />} />

@@ -31,9 +31,19 @@ Required GitHub Secrets: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDIN
 | `/` | `src/pages/Home.tsx` | Landing page with artist image + 3 painting links |
 | `/gallery` | `src/pages/Gallery.tsx` | Year-tabbed grid of all paintings |
 | `/gallery/:year/:filename` | `src/pages/GalleryImageView.tsx` | Full-screen single painting view |
-| `/sales` | `src/pages/Sales.tsx` | Paintings for sale (price > 0 only) |
+| `/shop` | `src/pages/Shop.tsx` | Shop landing — category overview (Calendar + Originals banners) |
+| `/shop/originals` | `src/pages/ShopOriginals.tsx` | Paintings for sale (price > 0); paintings over $2000 show "price on request" and route inquiries to the contact form |
+| `/shop/calendar` | `src/pages/ShopCalendar.tsx` | 2027 Art Calendar product page — cover + previews + "Buy Calendar" → Stripe link |
+| `/sales` | — | Redirects to `/shop` (legacy URL) |
 | `/contact` | `src/pages/Contact.tsx` | Contact form via EmailJS |
 | `/about` | `src/pages/About.tsx` | Bio + Artist Statement tabs |
+
+### Shop
+
+The **Shop** replaces the old single Sales page with a two-category overview:
+
+- **Originals** (`/shop/originals`) — the former Sales grid. Same Cloudinary data + interest-email buy flow. Paintings priced above `PRICE_ON_REQUEST_THRESHOLD` ($2000) hide the price, show "Price on request" / "Preis auf Anfrage", and route the inquiry to the contact form.
+- **2027 Art Calendar** (`/shop/calendar`) — a **static product** defined in `src/data/shopCalendar.ts` (cover image, preview images, Stripe Payment Link). It is *not* a Cloudinary gallery painting. The "Buy Calendar" button opens the Stripe link in a new tab. Images are currently dummy placeholders — swap them in `shopCalendar.ts`.
 
 ## Adding New Images
 

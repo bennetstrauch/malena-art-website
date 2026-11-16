@@ -63,7 +63,7 @@ Or if you're using Claude Code, just ask it to make the commit and push.
 ## Where do paintings show up?
 
 - **Gallery page** (`/gallery`) — all paintings, sorted by year tab
-- **Sales page** (`/sales`) — only paintings with price > 0
+- **Shop → Originals** (`/shop/originals`) — only paintings with price > 0 (paintings over $2000 show "price on request")
 
 ---
 

@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 export const navLinks = [
   { labelKey: "nav.home", to: "/" },
   { labelKey: "nav.gallery", to: "/gallery" },
-  { labelKey: "nav.sales", to: "/sales" },
+  { labelKey: "nav.shop", to: "/shop" },
   { labelKey: "nav.contact", to: "/contact" },
   { labelKey: "nav.about", to: "/about" },
 ];

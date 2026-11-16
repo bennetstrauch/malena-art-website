@@ -2,9 +2,15 @@
   "nav": {
     "home": "Startseite",
     "gallery": "Galerie",
-    "sales": "Verkauf",
+    "shop": "Shop",
     "contact": "Kontakt",
     "about": "Über mich"
+  },
+  "shop": {
+    "title": "Shop",
+    "originalsTitle": "Originale",
+    "calendarTitle": "2027 Kunstkalender",
+    "buyCalendar": "Kalender kaufen"
   },
   "gallery": {
     "loading": "Bilder werden geladen...",
@@ -17,7 +23,10 @@
     "loading": "Bilder werden geladen...",
     "error": "Fehler: {{message}}",
     "interested": "Ich bin interessiert",
-    "interestSubject": "Kaufinteresse: {{title}}, ${{price}}"
+    "interestSubject": "Kaufinteresse: {{title}}, ${{price}}",
+    "inquire": "Preis anfragen",
+    "priceOnRequest": "Preis auf Anfrage",
+    "inquirySubject": "Preisanfrage: {{title}}"
   },
   "contact": {
     "title": "Kontakt",
