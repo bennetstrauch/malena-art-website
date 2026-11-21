@@ -43,7 +43,10 @@ async function fetchAll(prefix) {
     fs.writeFileSync(path.join(outDir, "gallery-manifest.json"), JSON.stringify(mapped, null, 2));
     console.log("Wrote public/gallery-manifest.json, items:", mapped.length);
   } catch (err) {
-    console.error("generate-manifest error", err);
+    // Log only the message — the raw Cloudinary error includes the API key/secret.
+    const msg = err?.error?.message || err?.message || String(err);
+    const code = err?.error?.http_code ? ` (HTTP ${err.error.http_code})` : "";
+    console.error(`generate-manifest error: ${msg}${code}`);
     process.exit(1);
   }
 })();
