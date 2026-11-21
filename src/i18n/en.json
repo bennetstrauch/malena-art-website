@@ -9,8 +9,43 @@
   "shop": {
     "title": "Shop",
     "originalsTitle": "Originals",
-    "calendarTitle": "2027 Art Calendar",
-    "buyCalendar": "Buy Calendar"
+    "calendarTitle": "2027 Fine Art Calendar",
+    "buyCalendar": "Buy Calendar",
+    "calendar": {
+      "title": "2027 Fine Art Calendar",
+      "subtitle": "A Collection of Selected Works",
+      "previewAlt": {
+        "january": "January — Trotting in Paradise",
+        "october": "October — In Zenia",
+        "fan": "The 2027 calendar shown as fanned pages",
+        "overview": "All twelve paintings of the 2027 calendar"
+      },
+      "intro": "A curated selection of original paintings from different moments in my artistic journey, bringing together diverse colours, perspectives, and explorations of space and landscape.",
+      "buyNow": "Buy now",
+      "detailsHeading": "Product details",
+      "details": [
+        "Calendar year: 2027",
+        "Format: A4, portrait (21 x 29.7 cm)",
+        "12 months (January–December)",
+        "High-quality art reproductions",
+        "Top spiral binding with wire hanger"
+      ],
+      "descriptionHeading": "Description",
+      "description": [
+        "This calendar brings together paintings from different moments in my artistic journey. Each artwork has been personally selected and holds a special place in my creative process.",
+        "Although diverse in style, atmosphere, and origin, each piece carries its own significance and reflects a part of my artistic exploration.",
+        "Together, they offer a glimpse into my world of colour, creativity, and the merging of architecture and landscape.",
+        "I hope these artworks bring colour, inspiration, and joy into your everyday surroundings throughout 2027.",
+        "Thank you for welcoming my art into your home."
+      ],
+      "artistPhotoAlt": "Malena Strauch seated in front of a wall of her paintings",
+      "signatureAlt": "Malena Strauch signature",
+      "contactLabels": {
+        "website": "Website",
+        "instagram": "Instagram",
+        "email": "Contact"
+      }
+    }
   },
   "gallery": {
     "loading": "Loading images...",

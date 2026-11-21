@@ -10,7 +10,42 @@
     "title": "Shop",
     "originalsTitle": "Originale",
     "calendarTitle": "2027 Kunstkalender",
-    "buyCalendar": "Kalender kaufen"
+    "buyCalendar": "Kalender kaufen",
+    "calendar": {
+      "title": "2027 Kunstkalender",
+      "subtitle": "Eine Sammlung ausgewählter Werke",
+      "previewAlt": {
+        "january": "Januar — Trotting in Paradise",
+        "october": "Oktober — In Zenia",
+        "fan": "Der Kalender 2027 als aufgefächerte Seiten",
+        "overview": "Alle zwölf Gemälde des Kalenders 2027"
+      },
+      "intro": "Eine kuratierte Auswahl von Originalgemälden aus verschiedenen Momenten meiner künstlerischen Reise, die vielfältige Farben, Perspektiven und Erkundungen von Raum und Landschaft zusammenführt.",
+      "buyNow": "Jetzt kaufen",
+      "detailsHeading": "Produktdetails",
+      "details": [
+        "Kalenderjahr: 2027",
+        "Format: A4, Hochformat (21 x 29,7 cm)",
+        "12 Monate (Januar–Dezember)",
+        "Hochwertige Kunstreproduktionen",
+        "Spiralbindung oben mit Drahtaufhänger"
+      ],
+      "descriptionHeading": "Beschreibung",
+      "description": [
+        "Dieser Kalender vereint Gemälde aus verschiedenen Momenten meiner künstlerischen Reise. Jedes Kunstwerk wurde persönlich ausgewählt und nimmt einen besonderen Platz in meinem kreativen Prozess ein.",
+        "So vielfältig sie in Stil, Atmosphäre und Ursprung auch sind, trägt jedes Werk seine eigene Bedeutung und spiegelt einen Teil meiner künstlerischen Erkundung wider.",
+        "Gemeinsam gewähren sie einen Einblick in meine Welt aus Farbe, Kreativität und der Verschmelzung von Architektur und Landschaft.",
+        "Ich hoffe, diese Kunstwerke bringen Farbe, Inspiration und Freude in Ihren Alltag im Jahr 2027.",
+        "Danke, dass Sie meine Kunst in Ihrem Zuhause willkommen heißen."
+      ],
+      "artistPhotoAlt": "Malena Strauch sitzend vor einer Wand mit ihren Gemälden",
+      "signatureAlt": "Unterschrift von Malena Strauch",
+      "contactLabels": {
+        "website": "Website",
+        "instagram": "Instagram",
+        "email": "Kontakt"
+      }
+    }
   },
   "gallery": {
     "loading": "Bilder werden geladen...",
